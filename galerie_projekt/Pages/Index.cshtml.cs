@@ -41,6 +41,7 @@ namespace galerie_projekt.Pages
                 UploaderId = f.UploaderId,
                 Uploader = f.Uploader,
                 UploadedAt = f.UploadedAt,
+                IsPublic = f.IsPublic,
                 ThumbnailCount = f.Thumbnails.Count
             })
             .ToList();

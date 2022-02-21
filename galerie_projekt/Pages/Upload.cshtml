@@ -11,6 +11,11 @@
                 <label asp-for="Upload" class="control-label">File</label>
                 <input type="file" asp-for="Upload" class="form-control-file" multiple required />
             </div>
+            <div class="form-group form-check">
+                <label asp-for="ImageIsPublic" class="form-check-label">Veřejný obrázek</label>
+                <input type="checkbox" class="form-check-input" asp-for="ImageIsPublic">
+                
+          </div>
             <div class="form-group">
                 <input type="submit" value="Upload" class="btn btn-primary" />
                 <a class="btn btn-secondary" asp-page="/Index">Back</a>

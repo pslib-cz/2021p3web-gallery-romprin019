@@ -23,6 +23,7 @@ namespace galerie_projekt.Pages
         public string ErrorMessage { get; set; }
         [BindProperty]
         public ICollection<IFormFile> Upload { get; set; }
+        public bool ImageIsPublic { get; set; }
         public int _sameAspectRatioHeigth;
         public int _squareSize;
 
@@ -54,7 +55,8 @@ namespace galerie_projekt.Pages
                     OriginalName = uploadedFile.FileName,
                     UploaderId = userId,
                     UploadedAt = DateTime.Now,
-                    ContentType = uploadedFile.ContentType
+                    ContentType = uploadedFile.ContentType,
+                    IsPublic = ImageIsPublic
                 };
                 if (uploadedFile.ContentType.StartsWith("image")) // je soubor obrázek?
                 {

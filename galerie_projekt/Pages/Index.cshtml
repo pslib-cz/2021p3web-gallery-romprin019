@@ -17,7 +17,9 @@
                 <th>Thumbnail</th>
                 <th>Name</th>
                 <th>Uploaded at</th>
-                <th>Actions</th>
+                <th>Uploader</th>
+                <th>Public</th>
+                <th>Actions</th> 
             </tr>
         </thead>
         <tbody>
@@ -30,6 +32,12 @@
                     <td>@f.OriginalName</td>
                     <td>
                         @f.UploadedAt
+                    </td>
+                    <td>
+                        @f.Uploader
+                    </td>
+                    <td>
+                        @f.IsPublic
                     </td>
                     <td>
                         <a class="btn btn-sm btn-primary" asp-page-handler="download" asp-route-filename="@f.Id">Download</a>

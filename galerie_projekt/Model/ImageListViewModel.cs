@@ -8,6 +8,7 @@
         public DateTime UploadedAt { get; set; }
         public string OriginalName { get; set; }
         public string ContentType { get; set; }
+        public bool IsPublic { get; set; }
         public int ThumbnailCount { get; set; }
     }
 }
