@@ -23,6 +23,7 @@ namespace galerie_projekt.Pages
         public string ErrorMessage { get; set; }
         [BindProperty]
         public ICollection<IFormFile> Upload { get; set; }
+        [BindProperty]
         public bool ImageIsPublic { get; set; }
         public int _sameAspectRatioHeigth;
         public int _squareSize;
