@@ -12,7 +12,7 @@ using galerie_projekt.Data;
 namespace galerie_projekt.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220221212226_init")]
+    [Migration("20220222203533_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -30,8 +30,14 @@ namespace galerie_projekt.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("CreatorId")
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<bool>("IsPublic")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Name")
                         .IsRequired()

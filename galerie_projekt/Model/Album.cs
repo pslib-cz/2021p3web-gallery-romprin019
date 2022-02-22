@@ -9,6 +9,8 @@ namespace galerie_projekt.Model
         [Required]
         public string Name { get; set; }
         public AppUser Creator { get; set; }
+        public bool IsPublic { get; set; }
+        public DateTime CreatedAt { get; set; }
         public ICollection<AlbumImage> ImagesInAlbum { get; set; }
 
     }
