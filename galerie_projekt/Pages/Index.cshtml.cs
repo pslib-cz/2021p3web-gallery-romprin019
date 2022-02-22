@@ -44,6 +44,7 @@ namespace galerie_projekt.Pages
                 IsPublic = f.IsPublic,
                 ThumbnailCount = f.Thumbnails.Count
             })
+            .Where(f => f.IsPublic)
             .ToList();
 
 
