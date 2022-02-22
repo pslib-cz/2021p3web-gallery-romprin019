@@ -32,7 +32,7 @@ namespace galerie_projekt.Pages
             .Include(f => f.Uploader)
             .Include(f => f.Thumbnails)
             .OrderByDescending(f => f.UploadedAt)
-            .Take(5)
+            .Take(12)
             .Select(f => new ImageListViewModel
             {
                 Id = f.Id,
