@@ -1,0 +1,40 @@
+﻿@page
+@model galerie_projekt.Pages.ImageEditModel
+
+@{
+    ViewData["Title"] = "ImageEdit";
+}
+
+<h1>ImageEdit</h1>
+
+<h4>StoredImage</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="StoredImage.Id" />
+            @*<div class="form-group">
+                <label asp-for="StoredImage.UploaderId" class="control-label"></label>
+                <select asp-for="StoredImage.UploaderId" class="form-control" asp-items="ViewBag.UploaderId"></select>
+                <span asp-validation-for="StoredImage.UploaderId" class="text-danger"></span>
+            </div>*@
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="StoredImage.IsPublic" /> @Html.DisplayNameFor(model => model.StoredImage.IsPublic)
+                </label>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

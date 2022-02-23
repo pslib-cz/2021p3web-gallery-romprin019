@@ -17,6 +17,8 @@ namespace galerie_projekt.Pages
         [TempData]
         public string ErrorMessage { get; set; }
         public List<ImageListViewModel> Images { get; set; } = new List<ImageListViewModel>();
+        [BindProperty]
+        public bool ImageIsPublic { get; set; }
 
         public IndexModel(ILogger<IndexModel> logger, IWebHostEnvironment environment, ApplicationDbContext context)
         {

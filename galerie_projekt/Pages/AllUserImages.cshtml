@@ -36,10 +36,13 @@
                         @f.Uploader
                     </td>
                     <td>
-                        @f.IsPublic
+                        @Html.DisplayFor(modelItem => f.IsPublic)
                     </td>
                     <td>
                         <a class="btn btn-sm btn-primary" asp-page-handler="download" asp-route-filename="@f.Id">Download</a>
+                    </td>
+                    <td>
+                        <a asp-page="./ImageEdit" asp-route-id="@f.Id">Edit</a>
                     </td>
                 </tr>
             }
