@@ -44,8 +44,17 @@ namespace galerie_projekt.Pages
         // For more details, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
-
+            var a = await _context.Albums.FirstOrDefaultAsync(x => x.Id == Album.Id);
+            a.IsPublic = Album.IsPublic;
+            Album = a;
             _context.Attach(Album).State = EntityState.Modified;
+            /*if(Album.IsPublic == true)
+            {
+                if(Album.ImagesInAlbum.Count > 0)
+                {
+
+                }
+            }*/
 
             try
             {

@@ -202,6 +202,7 @@ namespace galerie_projekt.Migrations
                 {
                     FileId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     AlbumId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     AppUserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
