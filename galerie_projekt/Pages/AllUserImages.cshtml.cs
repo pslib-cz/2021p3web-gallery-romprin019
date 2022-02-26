@@ -1,5 +1,6 @@
 using galerie_projekt.Data;
 using galerie_projekt.Model;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -7,6 +8,7 @@ using System.Security.Claims;
 
 namespace galerie_projekt.Pages
 {
+    [Authorize]
     public class AllUserImagesModel : PageModel
     {
         private IWebHostEnvironment _environment;

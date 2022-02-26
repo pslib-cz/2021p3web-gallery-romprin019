@@ -36,7 +36,7 @@ namespace galerie_projekt.Pages
             _context = context;
             _configuration = configuration;
 
-            if (Int32.TryParse(_configuration["Thumbnails:SquareSize"], out _squareSize) == false) _squareSize = 256; // získej data z konfigurace nebo použij 256
+            if (Int32.TryParse(_configuration["Thumbnails:SquareSize"], out _squareSize) == false) _squareSize = 64; // získej data z konfigurace nebo použij 256
             if (Int32.TryParse(_configuration["Thumbnails:SameAspectRatioHeigth"], out _sameAspectRatioHeigth) == false) _sameAspectRatioHeigth = 128;
         }
 
@@ -94,6 +94,11 @@ namespace galerie_projekt.Pages
                 {
                     _context.Images.Add(fileRecord); // a uložíme ho
                     await _context.SaveChangesAsync(); // tím se nám vygeneruje jeho klíè ve formátu Guid
+                    
+                    if(!Directory.Exists("Uploads"))
+                    {
+                        Directory.CreateDirectory("Uploads");
+                    }
                     var file = Path.Combine(_environment.ContentRootPath, "Uploads", fileRecord.Id.ToString());
                     // pod tímto klíèem uložíme soubor i fyzicky na disk
                     using (var fileStream = new FileStream(file, FileMode.Create))

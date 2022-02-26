@@ -134,7 +134,7 @@ namespace galerie_projekt.Areas.Identity.Pages.Account
                     {
                         //Id = new Guid(),
                         Name = "Default",
-                        Creator = user,
+                        CreatorId = userId,
                         IsPublic = false,
                         CreatedAt = DateTime.Now,
                     };

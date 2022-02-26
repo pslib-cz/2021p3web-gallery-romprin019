@@ -32,6 +32,7 @@ namespace galerie_projekt.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("CreatorId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<bool>("IsPublic")
@@ -326,7 +327,9 @@ namespace galerie_projekt.Migrations
                 {
                     b.HasOne("galerie_projekt.Model.AppUser", "Creator")
                         .WithMany("Albums")
-                        .HasForeignKey("CreatorId");
+                        .HasForeignKey("CreatorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Creator");
                 });
@@ -336,7 +339,7 @@ namespace galerie_projekt.Migrations
                     b.HasOne("galerie_projekt.Model.Album", "Album")
                         .WithMany("ImagesInAlbum")
                         .HasForeignKey("AlbumId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("galerie_projekt.Model.AppUser", null)

@@ -24,7 +24,7 @@ namespace galerie_projekt.Data
             .HasOne(ma => ma.Album)
             .WithMany(m => m.ImagesInAlbum)
             .HasForeignKey(ma => ma.AlbumId)
-            .OnDelete(DeleteBehavior.Cascade);
+            .OnDelete(DeleteBehavior.Restrict);
             
             
             

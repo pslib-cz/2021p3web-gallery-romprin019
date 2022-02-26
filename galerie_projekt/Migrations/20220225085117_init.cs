@@ -75,7 +75,7 @@ namespace galerie_projekt.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CreatorId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    CreatorId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     IsPublic = table.Column<bool>(type: "bit", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
@@ -86,7 +86,8 @@ namespace galerie_projekt.Migrations
                         name: "FK_Albums_AspNetUsers_CreatorId",
                         column: x => x.CreatorId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -213,7 +214,7 @@ namespace galerie_projekt.Migrations
                         column: x => x.AlbumId,
                         principalTable: "Albums",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_AlbumImages_AspNetUsers_AppUserId",
                         column: x => x.AppUserId,

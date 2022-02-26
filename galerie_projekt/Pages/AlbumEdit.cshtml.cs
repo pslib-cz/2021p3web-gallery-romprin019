@@ -9,9 +9,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using galerie_projekt.Data;
 using galerie_projekt.Model;
+using Microsoft.AspNetCore.Authorization;
 
 namespace galerie_projekt.Pages
 {
+    [Authorize]
     public class AlbumEditModel : PageModel
     {
         private readonly galerie_projekt.Data.ApplicationDbContext _context;
