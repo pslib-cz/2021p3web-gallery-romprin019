@@ -56,6 +56,7 @@ namespace galerie_projekt.Pages
         public IActionResult OnGetDownload(string filename)
         {
             var fullName = Path.Combine(_environment.ContentRootPath, "Uploads", filename);
+            var image = _context.Images.FirstOrDefault(p => p.Id.ToString() == filename);
             if (System.IO.File.Exists(fullName)) // existuje soubor na disku?
             {
                 var fileRecord = _context.Images.Find(Guid.Parse(filename));
@@ -67,12 +68,16 @@ namespace galerie_projekt.Pages
                 else
                 {
                     ErrorMessage = "There is no record of such file.";
+                    _context.Images.Remove(image);
+                    _context.SaveChanges();
                     return RedirectToPage();
                 }
             }
             else
             {
                 ErrorMessage = "There is no such file.";
+                _context.Images.Remove(image);
+                _context.SaveChanges();
                 return RedirectToPage();
             }
         }

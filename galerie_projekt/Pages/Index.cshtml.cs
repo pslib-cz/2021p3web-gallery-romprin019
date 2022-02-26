@@ -66,6 +66,7 @@ namespace galerie_projekt.Pages
                 else
                 {
                     ErrorMessage = "There is no record of such file.";
+                    _context.Images.Remove(fileRecord);
                     return RedirectToPage();
                 }
             }

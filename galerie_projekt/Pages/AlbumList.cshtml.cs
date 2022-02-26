@@ -18,22 +18,22 @@ namespace galerie_projekt.Pages
     public class AlbumListModel : PageModel
     {
         private readonly galerie_projekt.Data.ApplicationDbContext _context;
-        private readonly UserManager<AppUser> _userManager;
+        
 
-        public AlbumListModel(galerie_projekt.Data.ApplicationDbContext context, UserManager<AppUser> userManager)
+        public AlbumListModel(galerie_projekt.Data.ApplicationDbContext context)
         {
             _context = context;
-            _userManager = userManager;
+            
         }
 
         public IList<Album> Album { get;set; }
 
         public async Task OnGetAsync()
         {
-            var user = _userManager.Users.FirstOrDefault();
+            var userId = User.Claims.Where(c => c.Type == ClaimTypes.NameIdentifier).FirstOrDefault().Value;
             Album = await _context.Albums
-                //.Include(a => a.Creator)
-                //.Where(a => a.Creator.Id == user.Id)
+                .Include(a => a.Creator)
+                .Where(a => a.CreatorId == userId)
                 .ToListAsync();
         }
     }
