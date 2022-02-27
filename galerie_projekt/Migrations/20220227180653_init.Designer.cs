@@ -12,7 +12,7 @@ using galerie_projekt.Data;
 namespace galerie_projekt.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220225085117_init")]
+    [Migration("20220227180653_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -59,9 +59,6 @@ namespace galerie_projekt.Migrations
                     b.Property<Guid>("AlbumId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("AppUserId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -69,8 +66,6 @@ namespace galerie_projekt.Migrations
                     b.HasKey("FileId", "AlbumId");
 
                     b.HasIndex("AlbumId");
-
-                    b.HasIndex("AppUserId");
 
                     b.ToTable("AlbumImages");
                 });
@@ -344,10 +339,6 @@ namespace galerie_projekt.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("galerie_projekt.Model.AppUser", null)
-                        .WithMany("AlbumImages")
-                        .HasForeignKey("AppUserId");
-
                     b.HasOne("galerie_projekt.Model.StoredImage", "StoredImage")
                         .WithMany("ImagesInAlbum")
                         .HasForeignKey("FileId")
@@ -439,8 +430,6 @@ namespace galerie_projekt.Migrations
 
             modelBuilder.Entity("galerie_projekt.Model.AppUser", b =>
                 {
-                    b.Navigation("AlbumImages");
-
                     b.Navigation("Albums");
 
                     b.Navigation("StoredImages");

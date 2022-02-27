@@ -203,8 +203,7 @@ namespace galerie_projekt.Migrations
                 {
                     FileId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     AlbumId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    AppUserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -215,11 +214,6 @@ namespace galerie_projekt.Migrations
                         principalTable: "Albums",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_AlbumImages_AspNetUsers_AppUserId",
-                        column: x => x.AppUserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_AlbumImages_Images_FileId",
                         column: x => x.FileId,
@@ -251,11 +245,6 @@ namespace galerie_projekt.Migrations
                 name: "IX_AlbumImages_AlbumId",
                 table: "AlbumImages",
                 column: "AlbumId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_AlbumImages_AppUserId",
-                table: "AlbumImages",
-                column: "AppUserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Albums_CreatorId",

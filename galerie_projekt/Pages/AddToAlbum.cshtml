@@ -1,0 +1,39 @@
+﻿@page
+@model galerie_projekt.Pages.TestAlbumImageModel
+
+@{
+    ViewData["Title"] = "TestAlbumImage";
+}
+
+<h1>Add Image to Album</h1>
+
+<h4>AlbumImage</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            
+            <div class="form-group">
+                <label asp-for="AlbumImage.AlbumId" class="control-label"></label>
+                <select asp-for="AlbumImage.AlbumId" class ="form-control" asp-items="ViewBag.AlbumId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="AlbumImage.Description" class="control-label"></label>
+                <input asp-for="AlbumImage.Description" class="form-control" />
+                <span asp-validation-for="AlbumImage.Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="AllUserImage">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
