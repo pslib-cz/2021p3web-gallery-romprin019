@@ -50,5 +50,20 @@ namespace galerie_projekt.Pages
             }
             return NotFound("no thumbnail for this file");
         }
+        public async Task<IActionResult> OnGetDelete(Guid id)
+        {
+            
+
+            var item = _context.AlbumImages
+                .Where(p => p.FileId == id).FirstOrDefault();
+            if (item != null)
+            {            
+                _context.AlbumImages.Remove(item);
+            }
+            _context.SaveChanges();
+            await OnGetAsync(id);
+            return Page();
+
+        }
     }
 }

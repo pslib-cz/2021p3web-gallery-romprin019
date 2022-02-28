@@ -2,6 +2,9 @@
 @model galerie_projekt.Pages.UploadModel
 @{
 }
+<head>
+    <link rel="stylesheet" href="~/css/style.css" asp-append-version="true" />
+</head>
 <h1>New file upload</h1>
 <hr />
 <div class="row">
@@ -12,12 +15,12 @@
                 <input type="file" asp-for="Upload" class="form-control-file" multiple required />
             </div>
             <div class="form-group form-check">
-                <label asp-for="ImageIsPublic" class="form-check-label">Veřejný obrázek</label>
+                <label asp-for="ImageIsPublic" class="form-check-label">Public image</label>
                 <input type="checkbox" asp-for="ImageIsPublic" class="form-check-input">
           </div>
             <div class="form-group">
-                <input type="submit" value="Upload" class="btn btn-primary" />
-                <a class="btn btn-secondary" asp-page="/Index">Back</a>
+                <input type="submit" value="Upload" class="btn" />
+                <a class="btn" asp-page="/Index">Back</a>
             </div>
         </form>
     </div>

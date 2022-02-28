@@ -4,10 +4,13 @@
 @{
     ViewData["Title"] = "AlbumImages";
 }
+<head>
+    <link rel="stylesheet" href="~/css/style.css" asp-append-version="true" />
+</head>
 
 <h1>AlbumImages</h1>
 
-<p>
+@*<p>
     <a asp-page="Create">Create New</a>
 </p>
 <table class="table">
@@ -51,4 +54,28 @@
         </tr>
 }
     </tbody>
-</table>
+</table>*@
+<div class="gallery-image">
+@foreach(var f in Model.AlbumImage)
+{
+   
+    <div class="img-box">
+      <img src="@Url.Page("/Index","Thumbnail", new {filename=f.FileId })" alt="" />
+      <div class="transparent-box">
+        <div class="caption">
+          <p>@f.StoredImage.OriginalName</p>
+          <p class="opacity-low">@f.StoredImage.Uploader</p>
+          @if(f.StoredImage.IsPublic == true){
+              <p class="opacity-low">Public</p>
+          }
+          else{
+              <p class="opacity-low">Private</p>
+          }
+          <p>@f.Description</p>
+          <a asp-page-handler="Delete" asp-route-id="@f.FileId">Delete from album</a>
+        </div>
+      </div> 
+    </div>
+    
+}
+</div>

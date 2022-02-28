@@ -32,7 +32,7 @@ namespace galerie_projekt.Data
                .HasOne(ma => ma.StoredImage)
                .WithMany(a => a.ImagesInAlbum)
                .HasForeignKey(ma => ma.FileId)
-               .OnDelete(DeleteBehavior.Restrict);
+               .OnDelete(DeleteBehavior.Cascade);
 
 
         }

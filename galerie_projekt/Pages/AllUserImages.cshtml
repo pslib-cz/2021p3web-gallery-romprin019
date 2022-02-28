@@ -3,10 +3,10 @@
 @{
 }
 <head>
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/style.css" asp-append-version="true" />
 </head>
 
-<h1>List of stored files</h1>
+@*<h1>List of stored files</h1>
 
 @if (Model.Images.Count > 0)
 {
@@ -55,4 +55,31 @@
 else
 {
     <p>There are no files uploaded yet.</p>
+}*@
+
+<div class="gallery-image">
+@foreach(var f in Model.Images)
+{
+   
+    <div class="img-box">
+      <img src="@Url.Page("/Index","Thumbnail", new {filename=f.Id })" alt="" />
+      <div class="transparent-box">
+        <div class="caption">
+          <p>@f.OriginalName</p>
+          <p class="opacity-low">@f.Uploader</p>
+          @if(f.IsPublic == true){
+              <p class="opacity-low">Public</p>
+          }
+          else{
+              <p class="opacity-low">Private</p>
+          }
+          <a asp-page="./ImageEdit" asp-route-id="@f.Id">Edit</a>
+          <a asp-page="./AddToAlbum" asp-route-id="@f.Id">Add to Album</a>
+          <a asp-page-handler="Delete" asp-route-id="@f.Id">Delete</a>
+        </div>
+      </div> 
+    </div>
+    
 }
+</div>
+    

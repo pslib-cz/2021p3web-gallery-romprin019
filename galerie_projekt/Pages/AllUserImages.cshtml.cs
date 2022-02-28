@@ -53,34 +53,7 @@ namespace galerie_projekt.Pages
 
         }
 
-        public IActionResult OnGetDownload(string filename)
-        {
-            var fullName = Path.Combine(_environment.ContentRootPath, "Uploads", filename);
-            var image = _context.Images.FirstOrDefault(p => p.Id.ToString() == filename);
-            if (System.IO.File.Exists(fullName)) // existuje soubor na disku?
-            {
-                var fileRecord = _context.Images.Find(Guid.Parse(filename));
-                if (fileRecord != null) // je soubor v datab·zi?
-                {
-                    return PhysicalFile(fullName, fileRecord.ContentType, fileRecord.OriginalName);
-                    // vraù ho zp·tky pod p˘vodnÌm n·zvem a typem
-                }
-                else
-                {
-                    ErrorMessage = "There is no record of such file.";
-                    _context.Images.Remove(image);
-                    _context.SaveChanges();
-                    return RedirectToPage();
-                }
-            }
-            else
-            {
-                ErrorMessage = "There is no such file.";
-                _context.Images.Remove(image);
-                _context.SaveChanges();
-                return RedirectToPage();
-            }
-        }
+        
         public async Task<IActionResult> OnGetThumbnail(string filename, ThumbnailType type = ThumbnailType.Square)
         {
             StoredImage file = await _context.Images
@@ -100,6 +73,25 @@ namespace galerie_projekt.Pages
                 return File(thumbnail.Blob, file.ContentType);
             }
             return NotFound("no thumbnail for this file");
+        }
+        public async Task<IActionResult> OnGetDelete(Guid id)
+        {
+            //double total;
+            var item = _context.Images
+                .Where(p => p.Id == id).SingleOrDefault();
+            var item2 = _context.AlbumImages
+                .Where(p => p.FileId == id).ToList();
+            if (item != null)
+            {
+                _context.Images.Remove(item);
+                _context.AlbumImages.RemoveRange(item2);
+                
+                
+            }
+            _context.SaveChanges();
+            OnGet();
+            return Page();
+
         }
     }
 }

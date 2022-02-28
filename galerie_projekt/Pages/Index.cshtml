@@ -4,10 +4,10 @@
     ViewData["Title"] = "Home page";
 }
 <head>
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/style.css" asp-append-version="true" />
 </head>
 
-<h1>List of stored files</h1>
+@*<h1>List of stored files</h1>
 
 @if (Model.Images.Count > 0)
 {
@@ -46,4 +46,21 @@
 else
 {
     <p>There are no files uploaded yet.</p>
+}*@
+<div class="gallery-image">
+@foreach(var f in Model.Images)
+{
+   
+    <div class="img-box">
+      <img src="@Url.Page("/Index","Thumbnail", new {filename=f.Id })" alt="" />
+      <div class="transparent-box">
+        <div class="caption">
+          <p>@f.OriginalName</p>
+          <p class="opacity-low">@f.Uploader</p>
+          <a asp-page-handler="download" asp-route-filename="@f.Id">Download</a>
+        </div>
+      </div> 
+    </div>
+    
 }
+</div>
