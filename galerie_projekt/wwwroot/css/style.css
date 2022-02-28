@@ -123,6 +123,7 @@ a{
     opacity: 1;
     color: khaki;
     transition: 0.1s linear;
+    border:none;
 }
 
     .btn:after, .btn:before {
@@ -202,7 +203,7 @@ nav {
         position: relative;
     }
 
-        .
+        
 
 
 
@@ -213,10 +214,12 @@ nav {
     background: #f2f5f7;
     margin: 5px;
     transition: all 0.3s ease;
+   
 }
 
 .hamburger {
     display: none;
+    z-index: 10;
 }
 
 /*Stying for small screens*/
@@ -230,9 +233,9 @@ nav {
         position: absolute;
         cursor: pointer;
         right: 5%;
-        top: 50%;
+        top: 2.5%;
         transform: translate(-5%, -50%);
-        z-index: 2;
+        z-index: 100;
         transition: all 0.7s ease;
     }
 
@@ -249,9 +252,10 @@ nav {
     }
 
         .nav-links.open {
-            clip-path: circle(1000px at 90% -10%);
-            -webkit-clip-path: circle(1000px at 90% -10%);
+            clip-path: circle(1500px at 90% -10%);
+            -webkit-clip-path: circle(1500px at 90% -10%);
             pointer-events: all;
+            z-index:10;
         }
 
         .nav-links li {
