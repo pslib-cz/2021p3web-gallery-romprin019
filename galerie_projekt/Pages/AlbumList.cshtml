@@ -10,9 +10,9 @@
 <h1>AlbumList</h1>
 
 <p>
-    <a asp-page="AlbumCreate">Create New</a>
+    <a class="btn" asp-page="AlbumCreate">Create New</a>
 </p>
-<table class="table">
+@*<table class="table">
     <thead>
         <tr>
             <th>
@@ -52,4 +52,28 @@
         </tr>
 }
     </tbody>
-</table>
+</table>*@
+<div class="gallery-image">
+@foreach(var f in Model.Album)
+{
+   
+    <div class="img-box">
+      <img src="@Url.Page("/Index","Thumbnail", new {filename=f.Id })" alt="" />
+      <div class="transparent-box">
+        <div class="caption">
+          <p>@f.Name album</p>
+          <p class="opacity-low">@f.Creator</p>
+          @if(f.IsPublic == true){
+              <p class="opacity-low">Public</p>
+          }
+          else{
+              <p class="opacity-low">Private</p>
+          }
+          <a asp-page="./AlbumImages" asp-route-id="@f.Id">View Images</a>
+          <a asp-page-handler="Delete" asp-route-id="@f.Id">Delete</a>
+        </div>
+      </div> 
+    </div>
+    
+}
+</div>

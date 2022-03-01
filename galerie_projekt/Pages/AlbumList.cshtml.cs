@@ -27,6 +27,7 @@ namespace galerie_projekt.Pages
         }
 
         public IList<Album> Album { get;set; }
+        
 
         public async Task OnGetAsync()
         {
@@ -35,6 +36,27 @@ namespace galerie_projekt.Pages
                 .Include(a => a.Creator)
                 .Where(a => a.CreatorId == userId)
                 .ToListAsync();
+        }
+        public async Task<IActionResult> OnGetThumbnail(Guid filename, ThumbnailType type = ThumbnailType.Square)
+        {
+            AlbumImage file = await _context.AlbumImages
+              .AsNoTracking()
+              .Where(p => p.AlbumId == filename)
+              .SingleOrDefaultAsync();
+              
+            if (file == null)
+            {
+                return NotFound("no record for this file");
+            }
+            Thumbnail thumbnail = await _context.Thumbnails
+              .AsNoTracking()
+              .Where(t => t.FileId == filename && t.Type == type)
+              .SingleOrDefaultAsync();
+            if (thumbnail != null)
+            {
+                return File(thumbnail.Blob, file.StoredImage.ContentType);
+            }
+            return NotFound("no thumbnail for this file");
         }
     }
 }

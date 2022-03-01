@@ -49,8 +49,9 @@ namespace galerie_projekt.Pages
             var userId = User.Claims.Where(c => c.Type == ClaimTypes.NameIdentifier).FirstOrDefault().Value; // získáme id pøihlášeného uživatele
             int successfulProcessing = 0;
             int failedProcessing = 0;
-            foreach (var uploadedFile in Upload)
-            {
+            
+                foreach (var uploadedFile in Upload)
+                {
                 var fileRecord = new Model.StoredImage
                 {
                     OriginalName = uploadedFile.FileName,
@@ -69,7 +70,11 @@ namespace galerie_projekt.Pages
                     IImageFormat format; // zde si uložíme formát obrázku (JPEG, GIF, ...), budeme ho potøebovat pøi ukládání
                     using (Image image = Image.Load(ims.ToArray(), out format)) // vytvoøíme ètvercový náhled
                     {
-                        int largestSize = Math.Max(image.Height, image.Width); // jaká je orientace obrázku?
+                        int largestSize = Math.Max(image.Height, image.Width);
+                        if(image.Width > 2000)
+                        {
+                            return BadRequest();
+                        }// jaká je orientace obrázku?
                         if (image.Width > image.Height) // podle orientace zmìníme velikost obrázku
                         {
                             image.Mutate(x => x.Resize(0, _squareSize));

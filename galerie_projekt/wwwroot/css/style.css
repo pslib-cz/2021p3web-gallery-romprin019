@@ -11,6 +11,34 @@ body {
     font-family: Raleway;
     background-color: #202125;
 }
+h1{
+    color: khaki;
+}
+.container-create {
+    margin-top: 5em;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+h4{
+    margin:10px;
+    color:khaki;
+}
+input{
+    font-size: 20px;
+}
+label{
+    color:khaki;
+}
+.form-control {
+    color: white;
+    background: #202125;
+    border:none;
+    border: 3px solid khaki;
+    padding: 5px;
+    margin: 0.5em;
+}
+
 
 .heading {
     text-align: center;

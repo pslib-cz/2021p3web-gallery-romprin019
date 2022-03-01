@@ -7,10 +7,11 @@
 <head>
     <link rel="stylesheet" href="~/css/style.css" asp-append-version="true" />
 </head>
-<h1>Add Image to Album</h1>
+<div class="container-create">
+    <h1>Add Image to Album</h1>
 
-<h4>AlbumImage</h4>
-<hr />
+
+
 <div class="row">
     <div class="col-md-4">
         <form method="post">
@@ -35,6 +36,8 @@
 <div>
     <a asp-page="AllUserImage">Back to List</a>
 </div>
+</div>
+
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
