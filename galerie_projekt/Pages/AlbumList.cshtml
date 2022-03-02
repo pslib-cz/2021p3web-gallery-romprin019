@@ -72,9 +72,14 @@
           else{
               <p class="opacity-low">Private</p>
           }
-          <a asp-page="./AlbumImages" asp-route-id="@f.Id">View Images</a>
-          <a asp-page-handler="Delete" asp-route-id="@f.Id">Delete</a>
-        </div>
+          <a asp-page="./AlbumImages" asp-route-albumid="@f.Id">View Images</a> 
+          @if (f.Id != Guid.Parse(f.CreatorId))
+          {
+              <a asp-page="./ImageSelect" asp-route-id="@f.Id">Add Images</a>
+              <a asp-page="./AlbumEdit" asp-route-id="@f.Id">Edit</a>
+              <a asp-page-handler="Delete" asp-route-id="@f.Id">Delete</a>
+          }
+          </div>
       </div> 
     </div>
     

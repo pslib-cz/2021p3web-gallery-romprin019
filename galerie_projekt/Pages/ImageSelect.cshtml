@@ -1,0 +1,34 @@
+﻿@page
+@model galerie_projekt.Pages.ImageSelectModel
+
+@{
+    ViewData["Title"] = "ImageSelect";
+}
+<head>
+    <link rel="stylesheet" href="~/css/style.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/ImageSelect.css" asp-append-version="true" />
+</head>
+
+<h1>ImageSelect</h1>
+
+<div class="gallery-image">
+@for(var i = 0; i < Model.AlbumImages.Count; i++) 
+{
+    
+    <div class="img-box">
+      <img src="@Url.Page("/Index","Thumbnail", new {filename=@Model.AlbumImages[i].FileId})" alt="" />
+      <div class="transparent-box">
+          <label class="button-input">
+              <input class="form-check-input" asp-for="@Model.AlbumImages[i].IsChecked"/>
+              <span class="checkmark"></span>
+          </label>              
+      </div>
+    </div>
+}
+</div>
+
+<div class="container-create">
+    <form method="post">
+        <button type="submit" class="btn">Add to album</button>
+    </form>   
+</div>

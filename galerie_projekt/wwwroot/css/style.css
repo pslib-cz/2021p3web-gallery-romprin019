@@ -15,6 +15,10 @@ h1{
     color: khaki;
     margin: 0.5em;
 }
+h2{
+    color:khaki;
+    margin:0.5em;
+}
 .container-create {
     margin-top: 5em;
     display: flex;

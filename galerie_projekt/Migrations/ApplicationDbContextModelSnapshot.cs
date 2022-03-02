@@ -61,6 +61,9 @@ namespace galerie_projekt.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("IsChecked")
+                        .HasColumnType("bit");
+
                     b.HasKey("FileId", "AlbumId");
 
                     b.HasIndex("AlbumId");

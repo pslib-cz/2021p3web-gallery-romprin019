@@ -57,8 +57,11 @@
 }
     </tbody>
 </table>*@
+
 <div class="gallery-image">
-@foreach(var f in Model.AlbumImage)
+@if(Model.AlbumImage.Count > 0)
+{
+    @foreach(var f in Model.AlbumImage)
 {
    
     <div class="img-box">
@@ -77,15 +80,21 @@
 
           @if(f.AlbumId != Guid.Parse(f.Album.CreatorId))
           {
-              <a asp-page-handler="Delete" asp-route-id="@f.FileId">Delete from album</a>
+              <a asp-page-handler="Delete" asp-route-pictureid="@f.FileId" asp-route-albumid="@f.AlbumId">Delete from album</a>
           }
           @if (f.AlbumId == Guid.Parse(f.Album.CreatorId))
           {
-              <a asp-page-handler="DeleteAll" asp-route-id="@f.FileId">Delete from album</a>       
+              <a asp-page-handler="DeleteAll" asp-route-pictureid="@f.FileId" asp-route-albumid="@f.AlbumId">Delete</a>       
           }
         </div>
       </div> 
     </div>
     
-}
+        }
+    }
+    else
+    {
+        <h2>There are no images</h2>
+    }
+
 </div>

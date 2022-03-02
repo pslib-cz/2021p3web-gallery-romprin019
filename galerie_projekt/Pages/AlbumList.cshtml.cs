@@ -63,5 +63,18 @@ namespace galerie_projekt.Pages
             
             
         }
+        public async Task<IActionResult> OnGetDeleteAsync(Guid id)
+        {
+            if (id != null)
+            {
+                var album = _context.Albums.Where(a => a.Id == id).FirstOrDefault();
+                _context.Albums.Remove(album);
+                _context.SaveChanges();
+                await OnGetAsync();
+                return Page();
+            }
+            return Page();
+        }
+
     }
 }
