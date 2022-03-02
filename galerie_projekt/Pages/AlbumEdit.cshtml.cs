@@ -22,12 +22,18 @@ namespace galerie_projekt.Pages
         {
             _context = context;
         }
+        public IList<AlbumImage> AlbumImages { get; set; }
 
         [BindProperty]
         public Album Album { get; set; }
 
         public async Task<IActionResult> OnGetAsync(Guid? id)
         {
+            AlbumImages = await _context.AlbumImages
+                .Include(a => a.Album)
+                .Include(a => a.StoredImage)
+                .Where(a => a.AlbumId == id)
+                .ToListAsync();
             if (id == null)
             {
                 return NotFound();
@@ -49,6 +55,13 @@ namespace galerie_projekt.Pages
             var a = await _context.Albums.FirstOrDefaultAsync(x => x.Id == Album.Id);
             a.IsPublic = Album.IsPublic;
             Album = a;
+            //if(a.IsPublic == true)
+            //{
+            //    foreach(var album in AlbumImages.Where(p => p.AlbumId == a.Id))
+            //    {
+            //        album.StoredImage.IsPublic == true;
+            //    }
+            //}
             _context.Attach(Album).State = EntityState.Modified;
             /*if(Album.IsPublic == true)
             {

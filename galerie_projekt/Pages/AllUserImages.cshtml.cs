@@ -74,24 +74,6 @@ namespace galerie_projekt.Pages
             }
             return NotFound("no thumbnail for this file");
         }
-        public async Task<IActionResult> OnGetDelete(Guid id)
-        {
-            //double total;
-            var item = _context.Images
-                .Where(p => p.Id == id).SingleOrDefault();
-            var item2 = _context.AlbumImages
-                .Where(p => p.FileId == id).ToList();
-            if (item != null)
-            {
-                _context.Images.Remove(item);
-                _context.AlbumImages.RemoveRange(item2);
-                
-                
-            }
-            _context.SaveChanges();
-            OnGet();
-            return Page();
-
-        }
+        
     }
 }

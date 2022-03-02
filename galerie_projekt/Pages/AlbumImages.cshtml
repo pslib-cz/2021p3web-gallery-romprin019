@@ -7,8 +7,10 @@
 <head>
     <link rel="stylesheet" href="~/css/style.css" asp-append-version="true" />
 </head>
+<div class="container-create">
+    <h1>Images in @Html.DisplayFor(p => p.albumname) album</h1>  
+</div>
 
-<h1>AlbumImages</h1>
 
 @*<p>
     <a asp-page="Create">Create New</a>
@@ -72,8 +74,16 @@
               <p class="opacity-low">Private</p>
           }
           <p>@f.Description</p>
-          <a asp-page-handler="Delete" asp-route-id="@f.FileId">Delete from album</a>
-        </div>
+
+          @if(f.AlbumId != Guid.Parse(f.Album.CreatorId))
+          {
+              <a asp-page-handler="Delete" asp-route-id="@f.FileId">Delete from album</a>
+          }
+          @if (f.AlbumId == Guid.Parse(f.Album.CreatorId))
+          {
+              <a asp-page-handler="DeleteAll" asp-route-id="@f.FileId">Delete from album</a>       
+          }
+                </div>
       </div> 
     </div>
     

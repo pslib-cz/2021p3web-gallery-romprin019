@@ -132,7 +132,7 @@ namespace galerie_projekt.Areas.Identity.Pages.Account
                     code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
                     var defaultalbum = new Album
                     {
-                        //Id = new Guid(),
+                        Id = Guid.Parse(userId),
                         Name = "Default",
                         CreatorId = userId,
                         IsPublic = false,

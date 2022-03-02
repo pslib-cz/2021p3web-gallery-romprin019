@@ -97,10 +97,23 @@ namespace galerie_projekt.Pages
                 }// vytvoøíme záznam
                 try
                 {
-                    _context.Images.Add(fileRecord); // a uložíme ho
-                    await _context.SaveChangesAsync(); // tím se nám vygeneruje jeho klíè ve formátu Guid
-                    
-                    if(!Directory.Exists("Uploads"))
+                    _context.Images.Add(fileRecord);// a uložíme ho
+                    _context.SaveChanges(); // tím se nám vygeneruje jeho klíè ve formátu Guid
+                    var defaultalbum = _context.Albums.Where(p => p.Id == Guid.Parse(userId)).FirstOrDefault();
+                    var albumimage = new AlbumImage
+                    {
+                        AlbumId = defaultalbum.Id,
+                        FileId = fileRecord.Id,
+                        StoredImage = fileRecord,
+                        Album = defaultalbum,
+                        Description = "Uploaded at " + fileRecord.UploadedAt
+
+
+                    };
+                    _context.AlbumImages.Add(albumimage);
+                    _context.SaveChanges();
+
+                    if (!Directory.Exists("Uploads"))
                     {
                         Directory.CreateDirectory("Uploads");
                     }

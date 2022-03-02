@@ -340,7 +340,7 @@ namespace galerie_projekt.Migrations
                     b.HasOne("galerie_projekt.Model.StoredImage", "StoredImage")
                         .WithMany("ImagesInAlbum")
                         .HasForeignKey("FileId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Album");
