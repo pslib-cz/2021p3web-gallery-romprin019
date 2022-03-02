@@ -70,20 +70,20 @@ namespace galerie_projekt.Pages
             return Page();
 
         }
-        public async Task<IActionResult> OnGetDeleteAllAsync(Guid id)
+        public async Task<IActionResult> OnGetDeleteAllAsync(Guid pictureid, Guid albumid)
         {
             
             var item = _context.Images
-                .Where(p => p.Id == id).SingleOrDefault();
+                .Where(p => p.Id == pictureid).SingleOrDefault();
             var item2 = _context.AlbumImages
-                .Where(p => p.FileId == id).ToList();
+                .Where(p => p.FileId == pictureid).ToList();
             if (item != null)
             {
                 _context.Images.Remove(item);
                 _context.AlbumImages.RemoveRange(item2);
             }
             _context.SaveChanges();
-            await OnGetAsync(id);
+            await OnGetAsync(albumid);
             return Page();
 
         }
