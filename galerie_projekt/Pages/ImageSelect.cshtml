@@ -10,25 +10,27 @@
 </head>
 
 <h1>ImageSelect</h1>
-
+<form method="post">
 <div class="gallery-image">
-@for(var i = 0; i < Model.AlbumImages.Count; i++) 
+@for(var i = 0; i < Model.GalleryPictures.Count; i++) 
 {
     
     <div class="img-box">
-      <img src="@Url.Page("/Index","Thumbnail", new {filename=@Model.AlbumImages[i].FileId})" alt="" />
+      <img src="@Url.Page("/Index","Thumbnail", new {filename=@Model.GalleryPictures[i].FileId})" alt="" />
       <div class="transparent-box">
-          <label class="button-input">
-              <input class="form-check-input" asp-for="@Model.AlbumImages[i].IsChecked"/>
+          
+              <input class="form-check-input" asp-for="GalleryPictures[i].FileId" hidden/>
+              <input class="form-check-input" asp-for="GalleryPictures[i].IsChecked" />
               <span class="checkmark"></span>
-          </label>              
+                     
       </div>
     </div>
 }
 </div>
 
 <div class="container-create">
-    <form method="post">
-        <button type="submit" class="btn">Add to album</button>
-    </form>   
+ 
+        <button type="submit" class="btn" asp-route-albumid="@Model.Albumid">Add to album</button>
+     
 </div>
+</form>   

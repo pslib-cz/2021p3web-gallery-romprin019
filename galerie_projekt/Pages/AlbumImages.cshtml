@@ -12,51 +12,6 @@
 </div>
 
 
-@*<p>
-    <a asp-page="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                Thumbnail
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.AlbumImage[0].StoredImage)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.AlbumImage[0].Album)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.AlbumImage[0].Description)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model.AlbumImage) {
-        <tr>
-            <td>
-                <img src="@Url.Page("/Index","Thumbnail", new {filename=item.FileId})" class="thumbnail-image" />
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FileId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.AlbumId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-            </td>
-        </tr>
-}
-    </tbody>
-</table>*@
 
 <div class="gallery-image">
 @if(Model.AlbumImage.Count > 0)
