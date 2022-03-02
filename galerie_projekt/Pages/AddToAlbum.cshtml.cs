@@ -28,9 +28,9 @@ namespace galerie_projekt.Pages
             {
                 return NotFound();
             }
-            
-            ViewData["AlbumId"] = new SelectList(_context.Albums, "Id", "Name");
             StoredImage = _context.Images.FirstOrDefault(m => m.Id == id);
+            ViewData["AlbumId"] = new SelectList(_context.Albums, "Id", "Name");
+            
             
             return Page();
         }
@@ -49,9 +49,13 @@ namespace galerie_projekt.Pages
                 AlbumId = AlbumImage.AlbumId,
                 Description = AlbumImage.Description
             };
+            
+            
+                _context.AlbumImages.Add(newalbumimage);
+                await _context.SaveChangesAsync();
+            
 
-            _context.AlbumImages.Add(newalbumimage);
-            await _context.SaveChangesAsync();
+           
 
             return RedirectToPage("./AllUserImages");
         }
