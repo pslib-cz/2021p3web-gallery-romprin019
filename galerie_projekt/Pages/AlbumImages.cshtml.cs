@@ -61,18 +61,18 @@ namespace galerie_projekt.Pages
             return NotFound("no thumbnail for this file");
         }
 
-        public async Task<IActionResult> OnGetDeleteAsync(Guid pictureid, Guid albumid)
-        {
-            var item = _context.AlbumImages
-                .Where(p => p.FileId == pictureid).FirstOrDefault();
-            if (item != null)
-            {            
-                _context.AlbumImages.Remove(item);
-            }
-            _context.SaveChanges();
-            await OnGetAsync(albumid);
-            return Page();
-        }
+        //public async Task<IActionResult> OnGetDeleteAsync(Guid pictureid, Guid albumid)
+        //{
+        //    var item = _context.AlbumImages
+        //        .Where(p => p.FileId == pictureid).FirstOrDefault();
+        //    if (item != null)
+        //    {            
+        //        _context.AlbumImages.Remove(item);
+        //    }
+        //    _context.SaveChanges();
+        //    await OnGetAsync(albumid);
+        //    return Page();
+        //}
 
         public async Task<IActionResult> OnGetDeleteAllAsync(Guid pictureid, Guid albumid)
         {

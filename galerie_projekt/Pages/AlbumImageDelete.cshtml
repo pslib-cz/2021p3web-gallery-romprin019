@@ -1,9 +1,10 @@
 ﻿@page
-@model galerie_projekt.Pages.ImageSelectModel
+@model galerie_projekt.Pages.AlbumImageDeleteModel
 
 @{
-    ViewData["Title"] = "ImageSelect";
+    ViewData["Title"] = "AlbumImageDelete";
 }
+
 <head>
     <link rel="stylesheet" href="~/css/style.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/ImageSelect.css" asp-append-version="true" />
@@ -29,7 +30,6 @@
 </div>
 
     <div class="container-create">
-        <button type="submit" class="btn" asp-route-albumid="@Model.Albumid">Add to album</button>
-</div>
+        <input type="submit" class="btn" value="Delete from album" asp-route-albumid="@Model.Albumid" />
+    </div>
 </form>
-

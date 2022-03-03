@@ -17,6 +17,7 @@ namespace galerie_projekt.Pages
     public class AlbumEditModel : PageModel
     {
         private readonly galerie_projekt.Data.ApplicationDbContext _context;
+        public string nameofalbum { get; set; }
 
         public AlbumEditModel(galerie_projekt.Data.ApplicationDbContext context)
         {
@@ -40,7 +41,7 @@ namespace galerie_projekt.Pages
             }
 
             Album = await _context.Albums.FirstOrDefaultAsync(m => m.Id == id);
-
+            
             if (Album == null)
             {
                 return NotFound();
@@ -54,6 +55,7 @@ namespace galerie_projekt.Pages
         {
             var a = await _context.Albums.FirstOrDefaultAsync(x => x.Id == Album.Id);
             a.IsPublic = Album.IsPublic;
+            a.Name = Album.Name;
             Album = a;
             //if(a.IsPublic == true)
             //{

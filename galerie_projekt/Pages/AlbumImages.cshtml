@@ -33,10 +33,7 @@
           }
           <p>@f.Description</p>
 
-          @if(f.AlbumId != Guid.Parse(f.Album.CreatorId))
-          {
-              <a asp-page-handler="Delete" asp-route-pictureid="@f.FileId" asp-route-albumid="@f.AlbumId">Delete from album</a>
-          }
+          
           @if (f.AlbumId == Guid.Parse(f.Album.CreatorId))
           {
               <a asp-page-handler="DeleteAll" asp-route-pictureid="@f.FileId" asp-route-albumid="@f.AlbumId">Delete</a>       
