@@ -9,27 +9,27 @@
     <link rel="stylesheet" href="~/css/ImageSelect.css" asp-append-version="true" />
 </head>
 
-<h1>ImageSelect</h1>
+<h1>Select images</h1>
 <form method="post">
-<div class="gallery-image">
-@for(var i = 0; i < Model.GalleryPictures.Count; i++) 
-{
-    
-    <div class="img-box">
-      <img src="@Url.Page("/Index","Thumbnail", new {filename=@Model.GalleryPictures[i].FileId})" alt="" />
-      <div class="transparent-box">
-          
-              <input class="form-check-input" asp-for="GalleryPictures[i].FileId" hidden/>
-              <input class="form-check-input" asp-for="GalleryPictures[i].IsChecked" />
-              <span class="checkmark"></span>
-                     
-      </div>
+    <div class="gallery-image">
+        @for (var i = 0; i < Model.GalleryPictures.Count; i++)
+        {
+
+            <div class="img-box">
+                <img src="@Url.Page("/Index","Thumbnail", new {filename=@Model.GalleryPictures[i].FileId})" alt="" />
+                <div class="transparent-box">
+
+                    <input class="form-check-input" asp-for="GalleryPictures[i].FileId" hidden />
+                    <input class="form-check-input" asp-for="GalleryPictures[i].IsChecked" />
+                    <span class="checkmark"></span>
+
+                </div>
+            </div>
+        }
     </div>
-}
-</div>
 
     <div class="container-create">
-        <button type="submit" class="btn" asp-route-albumid="@Model.Albumid">Add to album</button>
-</div>
+        <input type="submit" class="btn" value="Add to album" asp-route-albumid="@Model.Albumid" />
+    </div>
 </form>
 

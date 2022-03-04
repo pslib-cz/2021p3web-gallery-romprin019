@@ -8,40 +8,42 @@
     <link rel="stylesheet" href="~/css/style.css" asp-append-version="true" />
 </head>
 <div class="container-create">
-    <h1>Images in @Html.DisplayFor(p => p.albumname) album</h1>  
+    <h1>Images in @Html.DisplayFor(p => p.albumname) album</h1>
 </div>
 
 
 
 <div class="gallery-image">
-@if(Model.AlbumImage.Count > 0)
-{
-    @foreach(var f in Model.AlbumImage)
-{
-   
-    <div class="img-box">
-      <img src="@Url.Page("/Index","Thumbnail", new {filename=f.FileId })" alt="" />
-      <div class="transparent-box">
-        <div class="caption">
-          <p>@f.StoredImage.OriginalName</p>
-          <p class="opacity-low">@f.StoredImage.Uploader</p>
-          @if(f.StoredImage.IsPublic == true){
-              <p class="opacity-low">Public</p>
-          }
-          else{
-              <p class="opacity-low">Private</p>
-          }
-          <p>@f.Description</p>
+    @if (Model.AlbumImage.Count > 0)
+    {
+        @foreach (var f in Model.AlbumImage)
+        {
 
-          
-          @if (f.AlbumId == Guid.Parse(f.Album.CreatorId))
-          {
-              <a asp-page-handler="DeleteAll" asp-route-pictureid="@f.FileId" asp-route-albumid="@f.AlbumId">Delete</a>       
-          }
-        </div>
-      </div> 
-    </div>
-    
+            <div class="img-box">
+                <img src="@Url.Page("/Index","Thumbnail", new {filename=f.FileId })" alt="" />
+                <div class="transparent-box">
+                    <div class="caption">
+                        <p>@f.StoredImage.OriginalName</p>
+                        <p class="opacity-low">@f.StoredImage.Uploader</p>
+                        @if (f.StoredImage.IsPublic == true)
+                        {
+                            <p class="opacity-low">Public</p>
+                        }
+                        else
+                        {
+                            <p class="opacity-low">Private</p>
+                        }
+                        <p>@f.Description</p>
+
+
+                        @if (f.AlbumId == Guid.Parse(f.Album.CreatorId))
+                        {
+                            <a asp-page-handler="DeleteAll" asp-route-pictureid="@f.FileId" asp-route-albumid="@f.AlbumId">Delete</a>
+                        }
+                    </div>
+                </div>
+            </div>
+
         }
     }
     else

@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using galerie_projekt.Data;
 using galerie_projekt.Model;
 using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace galerie_projekt.Pages
 {
@@ -38,33 +39,36 @@ namespace galerie_projekt.Pages
 
         public async Task OnGetAsync(Guid id)
         {
+            var userId = User.Claims.Where(c => c.Type == ClaimTypes.NameIdentifier).FirstOrDefault().Value;
             Albumid = id;
             var x = await _context.AlbumImages
                 .Include(a => a.StoredImage)
                 .Include(a => a.Album)
-                .Where(p => p.AlbumId == id)
-                .ToListAsync();
-           
-            var y = await _context.AlbumImages
+                .Where(p => p.AlbumId == id )
+                .ToListAsync(); //obrazky z alaba
+
+            var m = await _context.AlbumImages
                 .Include(a => a.StoredImage)
                 .Include(a => a.Album)
-                //.Where(a => !x.Where(b => b.AlbumId == id).Any())
-                //.Select(a => new ImageSelectVM
-                //{
-                //    AlbumId = a.AlbumId,
-                //    FileId = a.FileId,
-                //    IsChecked = false
-                //})
-                .ToListAsync();
-            List<AlbumImage> z = new List<AlbumImage>();
-            foreach (var image in y)
-            {
-                if(!x.Contains(image))
-                {
-                    z.Add(image);
-                }
+                .Where(p => p.AlbumId == Guid.Parse(userId))
+                .ToListAsync(); //obrazky z defaultu
 
+       
+            List<AlbumImage> z = new List<AlbumImage>();
+            foreach (var image in x)
+            {
+                foreach (var image2 in m)
+                {
+                    if (image.FileId != image2.FileId)
+                    {
+                        if(!z.Contains(image2))
+                        
+                            z.Add(image2);
+                    }
+                }
             }
+            
+
             GalleryPictures = z.Select(a => new ImageSelectVM
             {
                 AlbumId = a.AlbumId,
@@ -72,14 +76,16 @@ namespace galerie_projekt.Pages
                 IsChecked = false
             })
             .ToList();
-            
+
         }
         public async Task<IActionResult> OnPost(Guid albumid)
         {
-
-
+            
+            
             foreach (var item in GalleryPictures)
             {
+                
+                
                 if (!item.IsChecked) continue;
                 var pic = _context.AlbumImages.FirstOrDefault(p => p.FileId == item.FileId);
                 var albumimage = new AlbumImage
@@ -90,6 +96,7 @@ namespace galerie_projekt.Pages
                 };
                 if (pic is not null)
                 {
+                    if(albumimage.AlbumId == albumid)
                     _context.AlbumImages.Add(albumimage);
                 }
             }

@@ -46,7 +46,7 @@ namespace galerie_projekt.Pages
                 IsPublic = f.IsPublic,
                 ThumbnailCount = f.Thumbnails.Count
             })
-            .Where(f => f.IsPublic)
+            //.Where(f => f.IsPublic)
             .ToList();
 
 
@@ -78,23 +78,28 @@ namespace galerie_projekt.Pages
         }
         public async Task<IActionResult> OnGetThumbnail(string filename, ThumbnailType type = ThumbnailType.Square)
         {
-            StoredImage file = await _context.Images
+            if (!User.Identity.IsAuthenticated || ImageIsPublic == false)
+            {
+                StoredImage file = await _context.Images
               .AsNoTracking()
               .Where(f => f.Id == Guid.Parse(filename))
               .SingleOrDefaultAsync();
-            if (file == null)
-            {
-                return NotFound("no record for this file");
+                if (file == null)
+                {
+                    return NotFound("no record for this file");
+                }
+                Thumbnail thumbnail = await _context.Thumbnails
+                  .AsNoTracking()
+                  .Where(t => t.FileId == Guid.Parse(filename) && t.Type == type)
+                  .SingleOrDefaultAsync();
+                if (thumbnail != null)
+                {
+                    return File(thumbnail.Blob, file.ContentType);
+                }
+                return NotFound("no thumbnail for this file");
             }
-            Thumbnail thumbnail = await _context.Thumbnails
-              .AsNoTracking()
-              .Where(t => t.FileId == Guid.Parse(filename) && t.Type == type)
-              .SingleOrDefaultAsync();
-            if (thumbnail != null)
-            {
-                return File(thumbnail.Blob, file.ContentType);
-            }
-            return NotFound("no thumbnail for this file");
+            return BadRequest();
+
         }
     }
 }
