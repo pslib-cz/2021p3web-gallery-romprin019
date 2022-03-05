@@ -20,8 +20,10 @@
         {
 
             <div class="img-box">
-                
-                <img src="@Url.Page("/Index","Thumbnail", new {filename=f.FileId })" alt="" />
+                @*@if (f.StoredImage.IsPublic == true || Model.creatorid == f.StoredImage.UploaderId)*@
+                {
+                    <img src="@Url.Page("/Index","Thumbnail", new {filename=f.FileId })" alt="" />
+                @*}*@
                 <div class="transparent-box">
                     <div class="caption">
                         <p>@f.StoredImage.OriginalName</p>

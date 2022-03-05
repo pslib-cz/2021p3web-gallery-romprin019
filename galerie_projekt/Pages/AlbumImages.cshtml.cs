@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using galerie_projekt.Data;
 using galerie_projekt.Model;
+using System.Security.Claims;
 
 namespace galerie_projekt.Pages
 {
@@ -25,7 +26,7 @@ namespace galerie_projekt.Pages
         public IList<AlbumImage> AlbumImage { get;set; }
         public Album currentalbum { get; set; }
         public Guid AlbumId2 { get; set; }
-        
+        public string creatorid { get; set; }
         public async Task OnGetAsync(Guid albumid)
         {
             
@@ -38,7 +39,9 @@ namespace galerie_projekt.Pages
             var album = _context.Albums.Where(p => p.Id == albumid).FirstOrDefault();
             currentalbum = album;
             AlbumId2 = albumid;
-                        
+            var userId = User.Claims.Where(c => c.Type == ClaimTypes.NameIdentifier).FirstOrDefault().Value;
+            userId = creatorid;
+
         }
 
         
@@ -46,8 +49,8 @@ namespace galerie_projekt.Pages
         
         public async Task<IActionResult> OnGetThumbnail(string filename, ThumbnailType type = ThumbnailType.Square)
         {
-            
-            if (User.Identity.IsAuthenticated)
+            var userId = User.Claims.Where(c => c.Type == ClaimTypes.NameIdentifier).FirstOrDefault().Value;
+            if (User.Identity.IsAuthenticated || currentalbum.CreatorId == userId)
             {
                 StoredImage file = await _context.Images
               .AsNoTracking()

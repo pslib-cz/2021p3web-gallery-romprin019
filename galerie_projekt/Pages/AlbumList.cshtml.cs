@@ -27,6 +27,7 @@ namespace galerie_projekt.Pages
         }
 
         public IList<Album> Album { get; set; }
+        public IList<AlbumImage> AlbumImages { get; set; }
 
 
         public async Task OnGetAsync()
@@ -73,6 +74,11 @@ namespace galerie_projekt.Pages
             if (id != null)
             {
                 var album = _context.Albums.Where(a => a.Id == id).FirstOrDefault();
+                List<AlbumImage> imagesinalbum = _context.AlbumImages.Where(p => p.AlbumId == id).ToList();
+                foreach (var item in imagesinalbum)
+                {
+                    _context.Remove(item);
+                }
                 _context.Albums.Remove(album);
                 _context.SaveChanges();
                 await OnGetAsync();
