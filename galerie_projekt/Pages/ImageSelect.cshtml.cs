@@ -40,36 +40,22 @@ namespace galerie_projekt.Pages
         public async Task OnGetAsync(Guid id)
         {
             var userId = User.Claims.Where(c => c.Type == ClaimTypes.NameIdentifier).FirstOrDefault().Value;
+
             Albumid = id;
-            var x = await _context.AlbumImages
+            var imagesinalbum = await _context.AlbumImages
                 .Include(a => a.StoredImage)
                 .Include(a => a.Album)
                 .Where(p => p.AlbumId == id )
                 .ToListAsync(); //obrazky z alaba
 
-            var m = await _context.AlbumImages
+            var allimages = await _context.AlbumImages
                 .Include(a => a.StoredImage)
                 .Include(a => a.Album)
                 .Where(p => p.AlbumId == Guid.Parse(userId))
                 .ToListAsync(); //obrazky z defaultu
 
-       
-            List<AlbumImage> z = new List<AlbumImage>();
-            foreach (var image in x)
-            {
-                foreach (var image2 in m)
-                {
-                    if (image.FileId != image2.FileId)
-                    {
-                        if(!z.Contains(image2))
-                        
-                            z.Add(image2);
-                    }
-                }
-            }
-            
 
-            GalleryPictures = z.Select(a => new ImageSelectVM
+            GalleryPictures = allimages.Where(x => imagesinalbum.All(y => y.FileId != x.FileId)).Select(a => new ImageSelectVM
             {
                 AlbumId = a.AlbumId,
                 FileId = a.FileId,
