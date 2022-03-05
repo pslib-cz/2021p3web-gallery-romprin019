@@ -24,6 +24,7 @@ namespace galerie_projekt.Pages
             _context = context;
         }
         public IList<AlbumImage> AlbumImages { get; set; }
+        public IList<StoredImage> StoredImages { get; set; }
 
         [BindProperty]
         public Album Album { get; set; }
@@ -57,6 +58,24 @@ namespace galerie_projekt.Pages
             a.IsPublic = Album.IsPublic;
             a.Name = Album.Name;
             Album = a;
+            a.ImagesInAlbum = _context.AlbumImages
+                .Where(p => p.AlbumId == a.Id)
+                .Include(p => p.StoredImage)
+                .ToList();
+            if (a.IsPublic == true)
+            {
+                foreach (var image in a.ImagesInAlbum.Where(p => p.AlbumId == a.Id))
+                {
+                    image.StoredImage.IsPublic = true;
+                }
+            }
+            if (a.IsPublic == false)
+            {
+                foreach (var image in a.ImagesInAlbum.Where(p => p.AlbumId == a.Id))
+                {
+                    image.StoredImage.IsPublic = false;
+                }
+            }
             //if(a.IsPublic == true)
             //{
             //    foreach(var album in AlbumImages.Where(p => p.AlbumId == a.Id))

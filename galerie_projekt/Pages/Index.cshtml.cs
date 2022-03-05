@@ -78,7 +78,7 @@ namespace galerie_projekt.Pages
         }
         public async Task<IActionResult> OnGetThumbnail(string filename, ThumbnailType type = ThumbnailType.Square)
         {
-            if (!User.Identity.IsAuthenticated || ImageIsPublic == false)
+            if (User.Identity.IsAuthenticated || ImageIsPublic == false)
             {
                 StoredImage file = await _context.Images
               .AsNoTracking()

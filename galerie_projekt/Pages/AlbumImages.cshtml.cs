@@ -23,7 +23,7 @@ namespace galerie_projekt.Pages
         }
 
         public IList<AlbumImage> AlbumImage { get;set; }
-        public string albumname { get; set; }
+        public Album currentalbum { get; set; }
         public Guid AlbumId2 { get; set; }
         
         public async Task OnGetAsync(Guid albumid)
@@ -36,13 +36,18 @@ namespace galerie_projekt.Pages
                 .ToListAsync();
 
             var album = _context.Albums.Where(p => p.Id == albumid).FirstOrDefault();
-            albumname = album.Name;
+            currentalbum = album;
             AlbumId2 = albumid;
                         
         }
+
+        
+
+        
         public async Task<IActionResult> OnGetThumbnail(string filename, ThumbnailType type = ThumbnailType.Square)
         {
-            if (!User.Identity.IsAuthenticated)
+            
+            if (User.Identity.IsAuthenticated)
             {
                 StoredImage file = await _context.Images
               .AsNoTracking()
@@ -100,3 +105,4 @@ namespace galerie_projekt.Pages
         }
     }
 }
+
