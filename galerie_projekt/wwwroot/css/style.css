@@ -25,6 +25,11 @@ h2{
     flex-direction: column;
     text-align: center;
 }
+.container-sort {
+    margin-right: 3em;
+    text-align: end;
+    position: sticky;
+}
 h4{
     margin:10px;
     color:khaki;

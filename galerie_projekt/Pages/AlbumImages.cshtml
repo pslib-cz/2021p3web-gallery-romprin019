@@ -10,21 +10,24 @@
 <div class="container-create">
     <h1>Images in @Html.DisplayFor(p => p.currentalbum.Name) album</h1>
 </div>
+<div class="container-sort">
+    <a asp-page-handler="Sort" asp-route-albumid="@Model.AlbumId2" asp-route-optionnum="1">Newest</a>
+    <a asp-page-handler="Sort" asp-route-albumid="@Model.AlbumId2" asp-route-optionnum="2">Oldest</a>
+    <a asp-page-handler="Sort" asp-route-albumid="@Model.AlbumId2" asp-route-optionnum="3">Name</a>
+</div>
 
 
 
 <div class="gallery-image">
-    
+
     @if (Model.AlbumImage.Count > 0)
     {
         @foreach (var f in Model.AlbumImage)
         {
 
             <div class="img-box">
-                @if (f.StoredImage.IsPublic == true || Model.creatorid == f.StoredImage.UploaderId)
-                {
-                    <img src="@Url.Page("/Index","Thumbnail", new {filename=f.FileId })" alt="" />
-                }
+                <img src="@Url.Page("/Index","Thumbnail", new {filename=f.FileId })" alt="" />
+
                 <div class="transparent-box">
                     <div class="caption">
                         <p>@f.StoredImage.OriginalName</p>
@@ -54,6 +57,6 @@
     {
         <h2>There are no images</h2>
     }
-    
+
 
 </div>

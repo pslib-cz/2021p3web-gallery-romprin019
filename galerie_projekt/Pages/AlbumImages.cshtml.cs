@@ -38,6 +38,8 @@ namespace galerie_projekt.Pages
                 .Where(a => a.AlbumId == albumid)
                 .ToListAsync();
 
+
+
             var album = _context.Albums.Where(p => p.Id == albumid).FirstOrDefault();
             currentalbum = album;
             AlbumId2 = albumid;
@@ -52,6 +54,7 @@ namespace galerie_projekt.Pages
         public async Task<IActionResult> OnGetThumbnail(string filename, ThumbnailType type = ThumbnailType.Square)
         {
             var userId = User.Claims.Where(c => c.Type == ClaimTypes.NameIdentifier).FirstOrDefault().Value;
+            creatorid = userId;
             if (User.Identity.IsAuthenticated || currentalbum.CreatorId == userId)
             {
                 StoredImage file = await _context.Images
@@ -139,6 +142,43 @@ namespace galerie_projekt.Pages
             return RedirectToPage("Error");
 
             
+        }
+        public async Task<IActionResult> OnGetSort(Guid albumid, string optionnum)
+        {
+            switch (optionnum)
+            {
+                case "1":
+                    AlbumImage = await _context.AlbumImages
+                .Include(a => a.Album)
+                .Include(a => a.StoredImage)
+                .Where(a => a.AlbumId == albumid)
+                .OrderByDescending(a => a.StoredImage.UploadedAt)
+                .ToListAsync();
+                    break;
+
+                case "2":
+                    AlbumImage = await _context.AlbumImages
+                .Include(a => a.Album)
+                .Include(a => a.StoredImage)
+                .Where(a => a.AlbumId == albumid)
+                .OrderBy(a => a.StoredImage.UploadedAt)
+                .ToListAsync();
+                    break;
+
+                case "3":
+                    AlbumImage = await _context.AlbumImages
+                .Include(a => a.Album)
+                .Include(a => a.StoredImage)
+                .Where(a => a.AlbumId == albumid)
+                .OrderBy(a => a.StoredImage.OriginalName)
+                .ToListAsync();
+                    break;  
+            }
+            AlbumId2 = albumid;
+            
+            
+
+            return Page();
         }
     }
 }

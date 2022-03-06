@@ -35,7 +35,7 @@ namespace galerie_projekt.Pages
             var userId = User.Claims.Where(c => c.Type == ClaimTypes.NameIdentifier).FirstOrDefault().Value;
             Album = await _context.Albums
                 .Include(a => a.Creator)
-                .Where(a => a.CreatorId == userId || a.IsPublic == true)
+                .Where(a => a.CreatorId == userId)
                 .ToListAsync();
         }
         public async Task<IActionResult> OnGetThumbnail(Guid filename, ThumbnailType type = ThumbnailType.Square)
