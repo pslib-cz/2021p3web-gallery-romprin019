@@ -52,11 +52,7 @@
     {
 
         <div class="img-box">
-            @if (User.Identity.IsAuthenticated)
-            {
-                <img src="@Url.Page("/Index","Thumbnail", new {filename=f.Id })" alt="" />
-            }
-
+            <img src="@Url.Page("/Index","Thumbnail", new {filename=f.Id })" alt="" />
             <div class="transparent-box">
                 <div class="caption">
                     <p>@f.OriginalName</p>

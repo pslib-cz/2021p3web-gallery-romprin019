@@ -9,21 +9,16 @@ using Microsoft.EntityFrameworkCore;
 using galerie_projekt.Data;
 using galerie_projekt.Model;
 using System.Security.Claims;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Authorization;
 
 namespace galerie_projekt.Pages
 {
-    [Authorize]
-    public class AlbumListModel : PageModel
+    public class AllAlbumsModel : PageModel
     {
         private readonly galerie_projekt.Data.ApplicationDbContext _context;
 
-
-        public AlbumListModel(galerie_projekt.Data.ApplicationDbContext context)
+        public AllAlbumsModel(galerie_projekt.Data.ApplicationDbContext context)
         {
             _context = context;
-
         }
 
         public IList<Album> Album { get; set; }
@@ -32,10 +27,10 @@ namespace galerie_projekt.Pages
 
         public async Task OnGetAsync()
         {
-            var userId = User.Claims.Where(c => c.Type == ClaimTypes.NameIdentifier).FirstOrDefault().Value;
+            
             Album = await _context.Albums
                 .Include(a => a.Creator)
-                .Where(a => a.CreatorId == userId || a.IsPublic == true)
+                .Where(a => a.IsPublic == true)
                 .ToListAsync();
         }
         public async Task<IActionResult> OnGetThumbnail(Guid filename, ThumbnailType type = ThumbnailType.Square)
@@ -65,7 +60,7 @@ namespace galerie_projekt.Pages
                 return Page();
             }
             return BadRequest();
-            
+
 
 
         }
@@ -86,6 +81,5 @@ namespace galerie_projekt.Pages
             }
             return Page();
         }
-
     }
 }

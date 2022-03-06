@@ -9,9 +9,11 @@ using Microsoft.EntityFrameworkCore;
 using galerie_projekt.Data;
 using galerie_projekt.Model;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 
 namespace galerie_projekt.Pages
 {
+    [Authorize]
     public class AlbumImagesModel : PageModel
     {
         private readonly galerie_projekt.Data.ApplicationDbContext _context;
@@ -105,6 +107,38 @@ namespace galerie_projekt.Pages
             _context.SaveChanges();
             await OnGetAsync(albumid);
             return Page();
+        }
+        
+        public async Task<IActionResult> OnGetImageAsync(Guid pictureid)
+        {
+            var userId = User.Claims.Where(c => c.Type == ClaimTypes.NameIdentifier).FirstOrDefault().Value;
+            
+            var image = _context.Images.Where(p => p.Id == pictureid).FirstOrDefault();
+            if (image.IsPublic == true || image.UploaderId == userId)
+            {
+                if (pictureid == null)
+                {
+                    return NotFound();
+                }
+                if (pictureid != null)
+                {
+                    
+                    var file = Path.Combine(_environment.ContentRootPath, "Uploads", pictureid.ToString());
+
+                    using (var fs = new FileStream(file, FileMode.Open))
+                    {
+                        MemoryStream ms = new MemoryStream();
+                        fs.CopyTo(ms);
+                        return File(ms.ToArray(), image.ContentType);
+                    }
+
+                }
+
+                return Page();
+            }
+            return RedirectToPage("Error");
+
+            
         }
     }
 }

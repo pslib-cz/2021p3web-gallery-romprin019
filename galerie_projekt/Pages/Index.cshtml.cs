@@ -34,6 +34,7 @@ namespace galerie_projekt.Pages
             .Include(f => f.Uploader)
             .Include(f => f.Thumbnails)
             .OrderByDescending(f => f.UploadedAt)
+            .Where(f => f.IsPublic == true)
             .Take(12)
             .Select(f => new ImageListViewModel
             {
@@ -78,8 +79,8 @@ namespace galerie_projekt.Pages
         }
         public async Task<IActionResult> OnGetThumbnail(string filename, ThumbnailType type = ThumbnailType.Square)
         {
-            if (User.Identity.IsAuthenticated || ImageIsPublic == false)
-            {
+            
+            
                 StoredImage file = await _context.Images
               .AsNoTracking()
               .Where(f => f.Id == Guid.Parse(filename))
@@ -97,7 +98,7 @@ namespace galerie_projekt.Pages
                     return File(thumbnail.Blob, file.ContentType);
                 }
                 return NotFound("no thumbnail for this file");
-            }
+            
             return BadRequest();
 
         }

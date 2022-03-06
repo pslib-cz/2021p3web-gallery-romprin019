@@ -14,16 +14,17 @@
 
 
 <div class="gallery-image">
+    
     @if (Model.AlbumImage.Count > 0)
     {
         @foreach (var f in Model.AlbumImage)
         {
 
             <div class="img-box">
-                @*@if (f.StoredImage.IsPublic == true || Model.creatorid == f.StoredImage.UploaderId)*@
+                @if (f.StoredImage.IsPublic == true || Model.creatorid == f.StoredImage.UploaderId)
                 {
                     <img src="@Url.Page("/Index","Thumbnail", new {filename=f.FileId })" alt="" />
-                @*}*@
+                }
                 <div class="transparent-box">
                     <div class="caption">
                         <p>@f.StoredImage.OriginalName</p>
@@ -38,7 +39,7 @@
                         }
                         <p>@f.Description</p>
 
-
+                        <a asp-page-handler="Image" asp-route-pictureid="@f.FileId">View Image</a>
                         @if (f.AlbumId == Guid.Parse(f.Album.CreatorId))
                         {
                             <a asp-page-handler="DeleteAll" asp-route-pictureid="@f.FileId" asp-route-albumid="@f.AlbumId">Delete</a>
@@ -53,5 +54,6 @@
     {
         <h2>There are no images</h2>
     }
+    
 
 </div>

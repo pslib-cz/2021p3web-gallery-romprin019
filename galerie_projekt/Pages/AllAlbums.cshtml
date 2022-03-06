@@ -1,0 +1,85 @@
+﻿@page
+@model galerie_projekt.Pages.AllAlbumsModel
+
+@{
+    ViewData["Title"] = "AllAlbums";
+}
+
+<head>
+    <link rel="stylesheet" href="~/css/style.css" asp-append-version="true" />
+</head>
+<div class="container-create">
+    <h1>All public albums</h1>
+</div>
+
+@*<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Album[0].Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Album[0].IsPublic)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Album[0].CreatedAt)
+            </th>
+            <th>
+                Creator
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Album) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsPublic)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedAt)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Creator.Email)
+            </td>
+            <td>
+                <a asp-page="./AlbumEdit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-page="./AlbumImages" asp-route-id="@item.Id">View images</a> |
+                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>*@
+<div class="gallery-image">
+@foreach(var f in Model.Album)
+{
+   
+    <div class="img-box">
+      <img src="@Url.Page("/Index","Thumbnail", new {filename=f.Id })" alt="" />
+      <div class="transparent-box">
+        <div class="caption">
+          <p>@f.Name album</p>
+          <p class="opacity-low">@f.Creator</p>
+          @if(f.IsPublic == true){
+              <p class="opacity-low">Public</p>
+          }
+          else{
+              <p class="opacity-low">Private</p>
+          }
+          <a asp-page="./AlbumImages" asp-route-albumid="@f.Id">View Images</a> 
+          @*@if (f.Id != Guid.Parse(f.CreatorId))
+          {
+              <a asp-page="./ImageSelect" asp-route-id="@f.Id">Add Images</a>
+              <a asp-page="./AlbumEdit" asp-route-id="@f.Id">Edit</a>
+              <a asp-page-handler="Delete" asp-route-id="@f.Id">Delete</a>
+              <a asp-page="./AlbumImageDelete" asp-route-id="@f.Id">Delete images from album</a>
+          }*@
+          </div>
+      </div> 
+    </div>
+    
+}
+</div>

@@ -12,7 +12,7 @@ using galerie_projekt.Data;
 namespace galerie_projekt.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220305210902_init")]
+    [Migration("20220306110515_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
