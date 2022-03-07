@@ -28,6 +28,7 @@ namespace galerie_projekt.Pages
 
         public IList<Album> Album { get; set; }
         public IList<AlbumImage> AlbumImages { get; set; }
+        public string creatorid { get; set; }
 
 
         public async Task OnGetAsync()
@@ -37,6 +38,7 @@ namespace galerie_projekt.Pages
                 .Include(a => a.Creator)
                 .Where(a => a.CreatorId == userId)
                 .ToListAsync();
+            creatorid = userId;
         }
         public async Task<IActionResult> OnGetThumbnail(Guid filename, ThumbnailType type = ThumbnailType.Square)
         {
@@ -85,6 +87,37 @@ namespace galerie_projekt.Pages
                 return Page();
             }
             return Page();
+        }
+
+        public async Task<IActionResult> OnPostAsync(Guid id, bool IsPublic, string Name)
+        {
+            var a = await _context.Albums.FirstOrDefaultAsync(x => x.Id == id);
+            a.IsPublic = IsPublic;
+            a.Name = Name;
+            a.ImagesInAlbum = _context.AlbumImages
+                .Where(p => p.AlbumId == a.Id)
+                .Include(p => p.StoredImage)
+                .ToList();
+            if (a.IsPublic == true)
+            {
+                foreach (var image in a.ImagesInAlbum.Where(p => p.AlbumId == a.Id))
+                {
+                    image.StoredImage.IsPublic = true;
+                }
+            }
+            if (a.IsPublic == false)
+            {
+                foreach (var image in a.ImagesInAlbum.Where(p => p.AlbumId == a.Id))
+                {
+                    image.StoredImage.IsPublic = false;
+                }
+            }
+
+            _context.Attach(a).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+
+
+            return RedirectToPage("./AlbumList");
         }
 
     }

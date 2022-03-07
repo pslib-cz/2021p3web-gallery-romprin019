@@ -47,20 +47,71 @@
     {
     <p>There are no files uploaded yet.</p>
     }*@
-<div class="gallery-image">
-    @foreach (var f in Model.Images)
-    {
+<div class="container-create">
+    <h1>Newest 12 pictures</h1>
+</div>
 
-        <div class="img-box">
-            <img src="@Url.Page("/Index","Thumbnail", new {filename=f.Id })" alt="" />
-            <div class="transparent-box">
-                <div class="caption">
-                    <p>@f.OriginalName</p>
-                    <p class="opacity-low">@f.Uploader</p>
-                    <a asp-page-handler="download" asp-route-filename="@f.Id">Download</a>
+<div class="gallery-image">
+    @if (Model.Images.Count > 0)
+    {
+        @foreach (var f in Model.Images)
+        {
+
+            <div class="img-box">
+                <img src="@Url.Page("/Index","Thumbnail", new {filename=f.Id })" alt="" />
+                <div class="transparent-box">
+                    <div class="caption">
+                        <p>@f.OriginalName</p>
+                        <p class="opacity-low">@f.Uploader</p>
+                        <a asp-page-handler="download" asp-route-filename="@f.Id">Download</a>
+                    </div>
                 </div>
             </div>
-        </div>
 
+        }
+    }
+    else
+    {
+        <div class="container-create">
+            <h2>There are no public images</h2>
+        </div>
+    }
+
+</div>
+<div class="container-create">
+    <h1>Public albums</h1>
+</div>
+<div class="gallery-image">
+    @if (Model.Album.Count > 0)
+    {
+        @foreach (var f in Model.Album)
+        {
+
+            <div class="img-box">
+                <img src="@Url.Page("/Index","Thumbnail", new {filename=f.Id })" alt="" />
+                <div class="transparent-box">
+                    <div class="caption">
+                        <p>@f.Name album</p>
+                        <p class="opacity-low">@f.Creator</p>
+                        @if (f.IsPublic == true)
+                        {
+                            <p class="opacity-low">Public</p>
+                        }
+                        else
+                        {
+                            <p class="opacity-low">Private</p>
+                        }
+                        <a asp-page="./AlbumImages" asp-route-albumid="@f.Id">View Images</a>
+                    </div>
+                </div>
+            </div>
+
+        }
+    }
+    else
+    {
+        <div class="container-create">
+            <h2>There are no public albums</h2>
+        </div>
     }
 </div>

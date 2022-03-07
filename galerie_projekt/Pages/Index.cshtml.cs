@@ -19,6 +19,8 @@ namespace galerie_projekt.Pages
         public List<ImageListViewModel> Images { get; set; } = new List<ImageListViewModel>();
         [BindProperty]
         public bool ImageIsPublic { get; set; }
+        public IList<Album> Album { get; set; }
+        public IList<AlbumImage> AlbumImages { get; set; }
 
         public IndexModel(ILogger<IndexModel> logger, IWebHostEnvironment environment, ApplicationDbContext context)
         {
@@ -27,7 +29,7 @@ namespace galerie_projekt.Pages
             _context = context;
         }
 
-        public void OnGet()
+        public async Task OnGetAsync()
         {
             Images = _context.Images
             .AsNoTracking()
@@ -47,8 +49,13 @@ namespace galerie_projekt.Pages
                 IsPublic = f.IsPublic,
                 ThumbnailCount = f.Thumbnails.Count
             })
-            //.Where(f => f.IsPublic)
             .ToList();
+
+            Album = await _context.Albums
+                .Include(a => a.Creator)
+                .Where(a => a.IsPublic == true)
+                .OrderByDescending(a => a.CreatedAt)
+                .ToListAsync();
 
 
         }
@@ -101,6 +108,23 @@ namespace galerie_projekt.Pages
             
             return BadRequest();
 
+        }
+        public async Task<IActionResult> OnGetDeleteAsync(Guid id)
+        {
+            if (id != null)
+            {
+                var album = _context.Albums.Where(a => a.Id == id).FirstOrDefault();
+                List<AlbumImage> imagesinalbum = _context.AlbumImages.Where(p => p.AlbumId == id).ToList();
+                foreach (var item in imagesinalbum)
+                {
+                    _context.Remove(item);
+                }
+                _context.Albums.Remove(album);
+                _context.SaveChanges();
+                await OnGetAsync();
+                return Page();
+            }
+            return Page();
         }
     }
 }

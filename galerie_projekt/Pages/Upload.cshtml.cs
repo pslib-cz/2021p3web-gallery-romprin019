@@ -49,9 +49,9 @@ namespace galerie_projekt.Pages
             var userId = User.Claims.Where(c => c.Type == ClaimTypes.NameIdentifier).FirstOrDefault().Value; // získáme id pøihlášeného uživatele
             int successfulProcessing = 0;
             int failedProcessing = 0;
-            
-                foreach (var uploadedFile in Upload)
-                {
+
+            foreach (var uploadedFile in Upload)
+            {
                 var fileRecord = new Model.StoredImage
                 {
                     OriginalName = uploadedFile.FileName,
@@ -71,7 +71,7 @@ namespace galerie_projekt.Pages
                     using (Image image = Image.Load(ims.ToArray(), out format)) // vytvoøíme ètvercový náhled
                     {
                         int largestSize = Math.Max(image.Height, image.Width);
-                        if(image.Width > 2000)
+                        if (image.Width > 2000)
                         {
                             return BadRequest();
                         }// jaká je orientace obrázku?
@@ -94,49 +94,52 @@ namespace galerie_projekt.Pages
                         image.Save(oms2, format); // a pøes proud ho uložit do databáze
                         fileRecord.Thumbnails.Add(new Thumbnail { Type = ThumbnailType.SameAspectRatio, Blob = oms2.ToArray() });
                     }
-                }// vytvoøíme záznam
-                try
-                {
-                    _context.Images.Add(fileRecord);// a uložíme ho
-                    _context.SaveChanges(); // tím se nám vygeneruje jeho klíè ve formátu Guid
-                    var defaultalbum = _context.Albums.Where(p => p.Id == Guid.Parse(userId)).FirstOrDefault();
-                    var albumimage = new AlbumImage
+                    // vytvoøíme záznam
+                    try
                     {
-                        AlbumId = defaultalbum.Id,
-                        FileId = fileRecord.Id,
-                        StoredImage = fileRecord,
-                        Album = defaultalbum,
-                        Description = "Uploaded at " + fileRecord.UploadedAt
+                        _context.Images.Add(fileRecord);// a uložíme ho
+                        _context.SaveChanges(); // tím se nám vygeneruje jeho klíè ve formátu Guid
+                        var defaultalbum = _context.Albums.Where(p => p.Id == Guid.Parse(userId)).FirstOrDefault();
+                        var albumimage = new AlbumImage
+                        {
+                            AlbumId = defaultalbum.Id,
+                            FileId = fileRecord.Id,
+                            StoredImage = fileRecord,
+                            Album = defaultalbum,
+                            Description = "Uploaded at " + fileRecord.UploadedAt
 
 
-                    };
-                    _context.AlbumImages.Add(albumimage);
-                    _context.SaveChanges();
+                        };
+                        _context.AlbumImages.Add(albumimage);
+                        _context.SaveChanges();
 
-                    if (!Directory.Exists("Uploads"))
-                    {
-                        Directory.CreateDirectory("Uploads");
+                        if (!Directory.Exists("Uploads"))
+                        {
+                            Directory.CreateDirectory("Uploads");
+                        }
+                        var file = Path.Combine(_environment.ContentRootPath, "Uploads", fileRecord.Id.ToString());
+                        // pod tímto klíèem uložíme soubor i fyzicky na disk
+                        using (var fileStream = new FileStream(file, FileMode.Create))
+                        {
+                            await uploadedFile.CopyToAsync(fileStream);
+                        };
+                        successfulProcessing++;
                     }
-                    var file = Path.Combine(_environment.ContentRootPath, "Uploads", fileRecord.Id.ToString());
-                    // pod tímto klíèem uložíme soubor i fyzicky na disk
-                    using (var fileStream = new FileStream(file, FileMode.Create))
+
+                    catch
                     {
-                        await uploadedFile.CopyToAsync(fileStream);
-                    };
-                    successfulProcessing++;
-                }
-                catch
-                {
-                    failedProcessing++;
-                }
-                if (failedProcessing == 0)
-                {
-                    SuccessMessage = "All files has been uploaded successfuly.";
+                        failedProcessing++;
+                    }
+                    if (failedProcessing == 0)
+                    {
+                        SuccessMessage = "All files has been uploaded successfuly.";
+                    }
                 }
                 else
                 {
-                    ErrorMessage = "There were " + failedProcessing + " errors during uploading and processing of files.";
+                    ErrorMessage = "We only accept images!";
                 }
+
             }
             return RedirectToPage("/Index");
         }

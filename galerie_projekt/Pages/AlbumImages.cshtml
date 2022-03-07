@@ -26,8 +26,14 @@
         {
 
             <div class="img-box">
-                <img src="@Url.Page("/Index","Thumbnail", new {filename=f.FileId })" alt="" />
-
+                @if (f.StoredImage.UploaderId == Model.creatorid || f.StoredImage.IsPublic == true)
+                {
+                    <img src="@Url.Page("/Index","Thumbnail", new {filename=f.FileId })" alt="" />
+                }
+                else
+                {
+                    <img src="~/Images/notavalible.jpg" alt="" />
+                }
                 <div class="transparent-box">
                     <div class="caption">
                         <p>@f.StoredImage.OriginalName</p>
@@ -42,10 +48,11 @@
                         }
                         <p>@f.Description</p>
 
-                       @* @if(f.StoredImage.IsPublic == true || f.StoredImage.UploaderId == Model.creatorid){*@
+                        @if (f.StoredImage.IsPublic == true || f.StoredImage.UploaderId == Model.creatorid)
+                        {
                             <a asp-page-handler="Image" asp-route-pictureid="@f.FileId">View Image</a>
-                        @*}*@
-                        
+                        }
+
                         @if (f.AlbumId == Guid.Parse(f.Album.CreatorId))
                         {
                             <a asp-page-handler="DeleteAll" asp-route-pictureid="@f.FileId" asp-route-albumid="@f.AlbumId">Delete</a>

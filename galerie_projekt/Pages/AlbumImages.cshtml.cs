@@ -44,7 +44,7 @@ namespace galerie_projekt.Pages
             currentalbum = album;
             AlbumId2 = albumid;
             var userId = User.Claims.Where(c => c.Type == ClaimTypes.NameIdentifier).FirstOrDefault().Value;
-            userId = creatorid;
+            creatorid = userId;
 
         }
 
@@ -145,6 +145,7 @@ namespace galerie_projekt.Pages
         }
         public async Task<IActionResult> OnGetSort(Guid albumid, string optionnum)
         {
+            var userId = User.Claims.Where(c => c.Type == ClaimTypes.NameIdentifier).FirstOrDefault().Value;
             switch (optionnum)
             {
                 case "1":
@@ -174,6 +175,7 @@ namespace galerie_projekt.Pages
                 .ToListAsync();
                     break;  
             }
+            creatorid = userId;
             AlbumId2 = albumid;
             
             
