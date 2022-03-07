@@ -61,14 +61,12 @@
     {
 
         <div class="img-box">
-            <img src="@Url.Page("/Index","Thumbnail", new {filename=f.Id })" alt="" />
             <div class="transparent-box">
                 <div class="caption">
                     @if (f.Id == Guid.Parse(Model.creatorid))
                     {
                         <p>@f.Name album</p>
                         <p class="opacity-low">@f.Creator</p>
-
                     }
                     else
                     {
@@ -107,3 +105,5 @@
 
     }
 </div>
+
+<script src="~/js/AlbumEdit.js"></script>

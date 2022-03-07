@@ -12,8 +12,8 @@ using galerie_projekt.Data;
 namespace galerie_projekt.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220307172714_init")]
-    partial class init
+    [Migration("20220307220814_init35")]
+    partial class init35
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -150,6 +150,9 @@ namespace galerie_projekt.Migrations
 
                     b.Property<string>("OriginalName")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TakenAt")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("UploadedAt")

@@ -150,6 +150,9 @@ namespace galerie_projekt.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("TakenAt")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("UploadedAt")
                         .HasColumnType("datetime2");
 

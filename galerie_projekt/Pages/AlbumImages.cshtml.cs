@@ -36,6 +36,7 @@ namespace galerie_projekt.Pages
                 .Include(a => a.Album)
                 .Include(a => a.StoredImage)
                 .Where(a => a.AlbumId == albumid)
+                .OrderByDescending(a => a.StoredImage.TakenAt)
                 .ToListAsync();
 
 

@@ -18,6 +18,7 @@ namespace galerie_projekt.Model
         [Required]
         public string ContentType { get; set; } // druh obsahu v souboru (MIME type)
         public bool IsPublic { get; set; }
+        public string? TakenAt { get; set; }
         public ICollection<Thumbnail> Thumbnails { get; set; } // kolekce všech možných náhledů
         public ICollection<AlbumImage> ImagesInAlbum { get; set; }
     }

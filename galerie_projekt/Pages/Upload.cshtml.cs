@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Formats;
+using SixLabors.ImageSharp.Metadata.Profiles.Exif;
 using SixLabors.ImageSharp.Processing;
 using System.Security.Claims;
 
@@ -52,6 +53,7 @@ namespace galerie_projekt.Pages
 
             foreach (var uploadedFile in Upload)
             {
+
                 var fileRecord = new Model.StoredImage
                 {
                     OriginalName = uploadedFile.FileName,
@@ -59,9 +61,14 @@ namespace galerie_projekt.Pages
                     UploadedAt = DateTime.Now,
                     ContentType = uploadedFile.ContentType,
                     IsPublic = ImageIsPublic
+
+
                 };
+
                 if (uploadedFile.ContentType.StartsWith("image")) // je soubor obrázek?
                 {
+
+
                     fileRecord.Thumbnails = new List<Thumbnail>();
                     MemoryStream ims = new MemoryStream(); // proud pro pøíchozí obrázek
                     MemoryStream oms1 = new MemoryStream(); // proud pro ètvercový náhled
@@ -70,6 +77,20 @@ namespace galerie_projekt.Pages
                     IImageFormat format; // zde si uložíme formát obrázku (JPEG, GIF, ...), budeme ho potøebovat pøi ukládání
                     using (Image image = Image.Load(ims.ToArray(), out format)) // vytvoøíme ètvercový náhled
                     {
+                        image.Metadata.ExifProfile = new ExifProfile();
+                        var exifProfile = image.Metadata.ExifProfile;
+                        if (image.Metadata.ExifProfile != null)
+                        {
+                            if (exifProfile.GetValue(ExifTag.DateTimeOriginal) != null)
+                            {
+                                //Obrázek má EXIF data
+                                fileRecord.TakenAt = exifProfile.GetValue(ExifTag.DateTimeOriginal).ToString();
+                            }
+                            else
+                            {
+                                fileRecord.TakenAt = DateTime.Now.ToString();
+                            }
+                        }
                         int largestSize = Math.Max(image.Height, image.Width);
                         if (image.Width > 2000)
                         {
@@ -87,6 +108,9 @@ namespace galerie_projekt.Pages
                         // obrázek oøízneme na ètverec
                         image.Save(oms1, format); // vložíme ho do výstupního proudu
                         fileRecord.Thumbnails.Add(new Thumbnail { Type = ThumbnailType.Square, Blob = oms1.ToArray() }); // a uložíme do databáze jako pole bytù
+
+                        
+
                     }
                     using (Image image = Image.Load(ims.ToArray(), out format)) // obdélníkový náhled zaèíná zde
                     {
@@ -94,9 +118,11 @@ namespace galerie_projekt.Pages
                         image.Save(oms2, format); // a pøes proud ho uložit do databáze
                         fileRecord.Thumbnails.Add(new Thumbnail { Type = ThumbnailType.SameAspectRatio, Blob = oms2.ToArray() });
                     }
+
                     // vytvoøíme záznam
                     try
                     {
+
                         _context.Images.Add(fileRecord);// a uložíme ho
                         _context.SaveChanges(); // tím se nám vygeneruje jeho klíè ve formátu Guid
                         var defaultalbum = _context.Albums.Where(p => p.Id == Guid.Parse(userId)).FirstOrDefault();
