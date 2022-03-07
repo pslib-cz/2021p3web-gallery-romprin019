@@ -42,7 +42,10 @@
                         }
                         <p>@f.Description</p>
 
-                        <a asp-page-handler="Image" asp-route-pictureid="@f.FileId">View Image</a>
+                       @* @if(f.StoredImage.IsPublic == true || f.StoredImage.UploaderId == Model.creatorid){*@
+                            <a asp-page-handler="Image" asp-route-pictureid="@f.FileId">View Image</a>
+                        @*}*@
+                        
                         @if (f.AlbumId == Guid.Parse(f.Album.CreatorId))
                         {
                             <a asp-page-handler="DeleteAll" asp-route-pictureid="@f.FileId" asp-route-albumid="@f.AlbumId">Delete</a>

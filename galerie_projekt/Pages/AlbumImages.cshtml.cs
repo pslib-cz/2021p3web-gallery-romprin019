@@ -139,7 +139,7 @@ namespace galerie_projekt.Pages
 
                 return Page();
             }
-            return RedirectToPage("Error");
+            return Redirect("/Identity/Account/AccessDenied");
 
             
         }

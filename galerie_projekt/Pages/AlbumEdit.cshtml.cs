@@ -76,21 +76,9 @@ namespace galerie_projekt.Pages
                     image.StoredImage.IsPublic = false;
                 }
             }
-            //if(a.IsPublic == true)
-            //{
-            //    foreach(var album in AlbumImages.Where(p => p.AlbumId == a.Id))
-            //    {
-            //        album.StoredImage.IsPublic == true;
-            //    }
-            //}
+            
             _context.Attach(Album).State = EntityState.Modified;
-            /*if(Album.IsPublic == true)
-            {
-                if(Album.ImagesInAlbum.Count > 0)
-                {
-
-                }
-            }*/
+            
 
             try
             {
