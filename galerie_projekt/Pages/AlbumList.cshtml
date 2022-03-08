@@ -70,11 +70,14 @@
                     }
                     else
                     {
-                        
-                            <form method="post">
+
+                        <form method="post">
                             <div class="form-group">
                                 <input asp-for="@f.Name" class="form-control" name="Name" aria-required="true" />
-                                <span asp-validation-for="@f.Name" class="opacity-low" style="color:darkred"></span>
+                                @if (f.Name == null)
+                                {
+                                    <span asp-validation-for="@f.Name" style="color:darkred; font-size:15px;">Name is required</span>
+                                }
                             </div>
                             <div class="form-group form-check">
                                 <input class="form-check-input" asp-for="@f.IsPublic" name="IsPublic" /> Public album
@@ -83,8 +86,8 @@
                                 <button type="submit" class="btn" asp-route-id="@f.Id">Save</button>
                             </div>
                         </form>
-                        
-                        
+
+
                     }
 
                     @if (f.IsPublic == true)
@@ -108,5 +111,10 @@
 
     }
 </div>
+@section Scripts {
+    @{
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+}
+}
 
 
