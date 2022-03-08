@@ -54,7 +54,7 @@ namespace galerie_projekt.Pages
             _context.Albums.Add(newalbum);
             await _context.SaveChangesAsync();
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("./AlbumList");
         }
     }
 }

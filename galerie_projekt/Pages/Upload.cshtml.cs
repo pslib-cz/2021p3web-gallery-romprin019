@@ -94,7 +94,7 @@ namespace galerie_projekt.Pages
                         int largestSize = Math.Max(image.Height, image.Width);
                         if (image.Width > 2000)
                         {
-                            return BadRequest("Image is too big, width > 2000px");
+                            return BadRequest("Image is too wide, width > 2000px");
                         }// jaká je orientace obrázku?
                         if (image.Width > image.Height) // podle orientace zmìníme velikost obrázku
                         {

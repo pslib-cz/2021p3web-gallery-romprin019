@@ -12,8 +12,8 @@ using galerie_projekt.Data;
 namespace galerie_projekt.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220307220814_init35")]
-    partial class init35
+    [Migration("20220308201047_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -60,7 +60,6 @@ namespace galerie_projekt.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("FileId", "AlbumId");

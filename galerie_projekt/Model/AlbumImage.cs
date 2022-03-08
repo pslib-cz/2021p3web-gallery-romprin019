@@ -6,6 +6,6 @@
         public StoredImage StoredImage { get; set; }
         public Guid AlbumId { get; set; }
         public Album Album { get; set; }
-        public string Description { get; set; }
+        public string? Description { get; set; }
     }
 }

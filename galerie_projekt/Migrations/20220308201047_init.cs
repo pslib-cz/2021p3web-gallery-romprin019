@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace galerie_projekt.Migrations
 {
-    public partial class init35 : Migration
+    public partial class init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -204,7 +204,7 @@ namespace galerie_projekt.Migrations
                 {
                     FileId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     AlbumId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {

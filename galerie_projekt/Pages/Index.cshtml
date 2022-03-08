@@ -81,16 +81,15 @@
 <div class="container-create">
     <h1>Public albums</h1>
 </div>
-<div class="gallery-image">
+<div class="gallery-album">
     @if (Model.Album.Count > 0)
     {
         @foreach (var f in Model.Album)
         {
 
-            <div class="img-box">
-                <img src="@Url.Page("/Index","Thumbnail", new {filename=f.Id })" alt="" />
-                <div class="transparent-box">
-                    <div class="caption">
+            <div class="img-box-album">
+                <div class="transparent-box-album">
+                    <div class="caption-album">
                         <p>@f.Name album</p>
                         <p class="opacity-low">@f.Creator</p>
                         @if (f.IsPublic == true)

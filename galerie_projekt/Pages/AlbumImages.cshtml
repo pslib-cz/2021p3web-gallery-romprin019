@@ -36,6 +36,15 @@
                 }
                 <div class="transparent-box">
                     <div class="caption">
+                        @if (f.StoredImage.UploaderId == Model.creatorid)
+                        {
+                            <form method="post">
+                            <div class="form-group">
+                                <input asp-for="@f.Description" class="form-control" name="description" />
+                            </div>
+                           <button type="submit" class="btn" asp-route-id="@f.FileId" asp-route-albumid="@f.AlbumId">Save</button>
+                            </form>
+                        }
                         <p>@f.StoredImage.OriginalName</p>
                         <p class="opacity-low">@f.StoredImage.Uploader</p>
                         @if (f.StoredImage.IsPublic == true)

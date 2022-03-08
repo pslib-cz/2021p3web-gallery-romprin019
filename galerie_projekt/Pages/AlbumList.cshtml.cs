@@ -11,6 +11,7 @@ using galerie_projekt.Model;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
+using System.ComponentModel.DataAnnotations;
 
 namespace galerie_projekt.Pages
 {

@@ -178,9 +178,15 @@ namespace galerie_projekt.Pages
             }
             creatorid = userId;
             AlbumId2 = albumid;
-            
-            
-
+            return Page();
+        }
+        public async Task<IActionResult> OnPostAsync(Guid id, string description, Guid albumid)
+        {
+            var a = await _context.AlbumImages.FirstOrDefaultAsync(x => x.FileId == id);
+            a.Description = description;
+            _context.Attach(a).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+            await OnGetAsync(albumid);
             return Page();
         }
     }

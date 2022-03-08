@@ -1,9 +1,9 @@
 ﻿@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@700;900&display=swap');
+
 :root {
-    
-    
     --neon-border-color: #C3B091;
 }
+
 * {
     box-sizing: border-box;
     margin: 0;
@@ -15,36 +15,44 @@ body {
     font-family: Raleway;
     background-color: #202125;
 }
-h1{
+
+h1 {
     color: khaki;
     margin: 0.5em;
 }
-h2{
-    color:khaki;
-    margin:0.5em;
+
+h2 {
+    color: khaki;
+    margin: 0.5em;
 }
+
 .container-create {
     margin-top: 5em;
     display: flex;
     flex-direction: column;
     text-align: center;
 }
+
 .container-sort {
     margin-right: 3em;
     text-align: end;
     position: sticky;
 }
-h4{
-    margin:10px;
-    color:khaki;
+
+h4 {
+    margin: 10px;
+    color: khaki;
 }
-input{
+
+input {
     font-size: 20px;
-    accent-color:khaki;
+    accent-color: khaki;
 }
-label{
-    color:khaki;
+
+label {
+    color: khaki;
 }
+
 .form-control {
     color: white;
     background: #202125;
@@ -54,11 +62,12 @@ label{
     margin: 0.5em;
     transition: 0.3s linear;
 }
-.form-control:focus{
-    outline:none;
-    transition: 0.3s linear;
-    border: 3px solid white;
-}
+
+    .form-control:focus {
+        outline: none;
+        transition: 0.3s linear;
+        border: 3px solid white;
+    }
 
 
 .heading {
@@ -94,17 +103,15 @@ label{
     color: white;
     position: relative;
     transition: 0.2s linear;
-}
-span{
-    opacity:1;
+    background-color: transparent;
 }
 
 .caption {
     position: absolute;
-    bottom: 5px;
+    bottom: 20px;
     left: 20px;
-    opacity: 0.0;
-    transition: transform 0.3s ease, opacity 0.3s ease;
+    opacity: 1;
+    
 }
 
 .transparent-box {
@@ -115,33 +122,38 @@ span{
     top: 0;
     left: 0;
     transition: background-color 0.3s ease;
+    border: 0.2rem solid #fff;
     transition: 0.2s linear;
 }
 
 .img-box:hover img {
     transition: 0.2s linear;
     transform: scale(1.1);
+    box-shadow: 0 0 .5rem #fff, inset 0 0 .5rem #fff, 0 0 2rem var(--neon-border-color), inset 0 0 2rem var(--neon-border-color), 0 0 4rem var(--neon-border-color), inset 0 0 4rem var(--neon-border-color);
 }
 
 .img-box:hover .transparent-box {
     transition: 0.2s linear;
     background-color: rgba(0, 0, 0, 0.5);
+    box-shadow: 0 0 .5rem #fff, inset 0 0 .5rem #fff, 0 0 2rem var(--neon-border-color), inset 0 0 2rem var(--neon-border-color), 0 0 4rem var(--neon-border-color), inset 0 0 4rem var(--neon-border-color);
 }
 
 .img-box:hover .caption {
-    transform: translateY(-20px);
+    transform: translateY(0px) !important;
     opacity: 1.0;
 }
 
 .img-box:hover {
     transition: 0.2s linear;
     cursor: pointer;
+    box-shadow: 0 0 .5rem #fff, inset 0 0 .5rem #fff, 0 0 2rem var(--neon-border-color), inset 0 0 2rem var(--neon-border-color), 0 0 4rem var(--neon-border-color), inset 0 0 4rem var(--neon-border-color);
 }
 
 .caption > p:nth-child(2) {
     font-size: 0.8em;
 }
-.container{
+
+.container {
     margin-top: 50px;
     color: white;
 }
@@ -149,19 +161,19 @@ span{
 .opacity-low {
     opacity: 0.5;
 }
-a{
+
+a {
     text-decoration: none;
-    cursor:pointer;
+    cursor: pointer;
     opacity: 1;
     color: khaki;
     transition: 0.1s linear;
-    
     margin-right: 15px;
 }
+
     a:hover {
         color: white;
         transition: 0.1s linear;
-        
     }
 
 
@@ -182,6 +194,7 @@ a{
     border: none;
     margin: 10px;
 }
+
     .btn:after, .btn:before {
         content: " ";
         width: 10px;
@@ -252,14 +265,13 @@ nav {
     }
 
         .nav-links li a:hover {
-            
         }
 
     .nav-links li {
         position: relative;
     }
 
-        
+
 
 
 
@@ -270,7 +282,6 @@ nav {
     background: #f2f5f7;
     margin: 5px;
     transition: all 0.3s ease;
-   
 }
 
 .hamburger {
@@ -278,7 +289,7 @@ nav {
     z-index: 10;
 }
 
-/*Styling for small screens*/
+/*Stying for small screens*/
 @media screen and (max-width: 1080px) {
     nav {
         z-index: 3;
@@ -311,7 +322,7 @@ nav {
             clip-path: circle(1500px at 90% -10%);
             -webkit-clip-path: circle(1500px at 90% -10%);
             pointer-events: all;
-            z-index:10;
+            z-index: 10;
         }
 
         .nav-links li {
@@ -364,75 +375,4 @@ nav {
 
 .toggle .line3 {
     transform: rotate(45deg) translate(-5px,-6px);
-}
-
-
-
-
-
-.gallery-album {
-    padding: 20px;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-}
-.img-box-album {
-    box-sizing: content-box;
-    margin: 10px;
-    height: 250px;
-    width: 350px;
-    overflow: hidden;
-    display: inline-block;
-    color: white;
-    position: relative;
-    transition: 0.2s linear;
-    background-color: transparent;
-}
-
-.caption-album {
-    position: absolute;
-    bottom: 20px;
-    left: 20px;
-    opacity: 1;
-}
-
-.transparent-box-album {
-    height: 250px;
-    width: 350px;
-    background-color: rgba(0, 0, 0, 0);
-    
-    
-    transition: background-color 0.3s ease;
-    border: 0.2rem solid #fff;
-    transition: 0.2s linear;
-}
-
-.img-box-album:hover img {
-    transition: 0.2s linear;
-    transform: scale(1.1);
-    box-shadow: 0 0 .5rem #fff, inset 0 0 .5rem #fff, 0 0 2rem var(--neon-border-color), inset 0 0 2rem var(--neon-border-color), 0 0 4rem var(--neon-border-color), inset 0 0 4rem var(--neon-border-color);
-}
-
-.img-box-album:hover .transparent-box-album {
-    transition: 0.2s linear;
-    background-color: rgba(0, 0, 0, 0.5);
-    box-shadow: 0 0 .5rem #fff, inset 0 0 .5rem #fff, 0 0 2rem var(--neon-border-color), inset 0 0 2rem var(--neon-border-color), 0 0 4rem var(--neon-border-color), inset 0 0 4rem var(--neon-border-color);
-}
-
-.img-box-album:hover .caption-album {
-    transform: translateY(0px) !important;
-    opacity: 1.0;
-}
-
-.img-box-album:hover {
-    transition: 0.2s linear;
-    cursor: pointer;
-    box-shadow: 0 0 .5rem #fff, inset 0 0 .5rem #fff, 0 0 2rem var(--neon-border-color), inset 0 0 2rem var(--neon-border-color), 0 0 4rem var(--neon-border-color), inset 0 0 4rem var(--neon-border-color);
-}
-.gallery-image img {
-    height: 250px;
-    width: 350px;
-    transform: scale(1.0);
-    transition: transform 0.4s ease;
-    object-fit: cover;
 }
