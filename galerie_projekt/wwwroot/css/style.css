@@ -1,5 +1,9 @@
 ﻿@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@700;900&display=swap');
-
+:root {
+    
+    
+    --neon-border-color: #C3B091;
+}
 * {
     box-sizing: border-box;
     margin: 0;
@@ -89,8 +93,7 @@ label{
     display: inline-block;
     color: white;
     position: relative;
-    
-    
+    transition: 0.2s linear;
 }
 
 .caption {
@@ -109,14 +112,20 @@ label{
     top: 0;
     left: 0;
     transition: background-color 0.3s ease;
+    border: 0.4rem solid #fff;
+    transition: 0.2s linear;
 }
 
 .img-box:hover img {
+    transition: 0.2s linear;
     transform: scale(1.1);
+    box-shadow: 0 0 .5rem #fff, inset 0 0 .5rem #fff, 0 0 2rem var(--neon-border-color), inset 0 0 2rem var(--neon-border-color), 0 0 4rem var(--neon-border-color), inset 0 0 4rem var(--neon-border-color);
 }
 
 .img-box:hover .transparent-box {
+    transition: 0.2s linear;
     background-color: rgba(0, 0, 0, 0.5);
+    box-shadow: 0 0 .5rem #fff, inset 0 0 .5rem #fff, 0 0 2rem var(--neon-border-color), inset 0 0 2rem var(--neon-border-color), 0 0 4rem var(--neon-border-color), inset 0 0 4rem var(--neon-border-color);
 }
 
 .img-box:hover .caption {
@@ -125,7 +134,9 @@ label{
 }
 
 .img-box:hover {
+    transition: 0.2s linear;
     cursor: pointer;
+    box-shadow: 0 0 .5rem #fff, inset 0 0 .5rem #fff, 0 0 2rem var(--neon-border-color), inset 0 0 2rem var(--neon-border-color), 0 0 4rem var(--neon-border-color), inset 0 0 4rem var(--neon-border-color);
 }
 
 .caption > p:nth-child(2) {
